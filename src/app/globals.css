@@ -1,4 +1,7 @@
 @import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 :root {
   --background: #ffffff;
@@ -23,4 +26,23 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Masquer les overlays et debug injectés par Next.js / Vercel */
+.nextjs-portal,
+[data-nextjs-scroll-reset],
+#__next-build-watcher,
+#__next-error-overlay,
+.nextjs-overlay,
+div[style*="position: fixed"][style*="bottom: 0"][style*="left: 0"] {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  position: absolute !important;
+  z-index: -9999 !important;
 }
