@@ -10,7 +10,7 @@ interface CVModalProps {
 }
 
 export default function CVModal({ isOpen, onClose }: CVModalProps) {
-  const [mode, setMode] = useState<'menu' | 'pdf' | 'video-fr' | 'video-en'>('menu')
+  const [mode, setMode] = useState<'menu' | 'pdf'>('menu')
 
   const closeAll = () => {
     setMode('menu')
@@ -21,15 +21,17 @@ export default function CVModal({ isOpen, onClose }: CVModalProps) {
     switch (mode) {
       case 'pdf':
         return (
-          <>
+          <div className="fixed inset-0 z-50 flex flex-col bg-white dark:bg-zinc-900">
             <div className="flex justify-end p-4">
               <button
                 onClick={closeAll}
                 className="text-gray-600 dark:text-gray-300 hover:text-red-500 text-2xl"
+                aria-label="Fermer"
               >
                 <IoClose />
               </button>
             </div>
+
             <motion.iframe
               src="/cv/ousmane-drame-cv.pdf"
               className="flex-grow w-full px-4 md:px-16 pb-4"
@@ -39,6 +41,7 @@ export default function CVModal({ isOpen, onClose }: CVModalProps) {
               animate={{ scale: 1, opacity: 1 }}
               transition={{ duration: 0.4 }}
             />
+
             <div className="p-4 text-center">
               <a
                 href="/cv/ousmane-drame-cv.pdf"
@@ -48,12 +51,9 @@ export default function CVModal({ isOpen, onClose }: CVModalProps) {
                 Télécharger le CV
               </a>
             </div>
-          </>
+          </div>
         )
-      case 'video-fr':
-        return renderVideo('/videos/cv-fr.mp4')
-      case 'video-en':
-        return renderVideo('/videos/cv-en.mp4')
+
       default:
         return (
           <motion.div
@@ -69,6 +69,7 @@ export default function CVModal({ isOpen, onClose }: CVModalProps) {
               <button
                 className="absolute top-4 right-4 text-gray-500 dark:text-gray-300 hover:text-red-500 text-2xl"
                 onClick={closeAll}
+                aria-label="Fermer"
               >
                 <IoClose />
               </button>
@@ -92,49 +93,12 @@ export default function CVModal({ isOpen, onClose }: CVModalProps) {
                 >
                   Télécharger le CV
                 </a>
-
-                <button
-                  onClick={() => setMode('video-fr')}
-                  className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded transition"
-                >
-                  🎥 Voir CV Vidéo (Français)
-                </button>
-
-                <button
-                  onClick={() => setMode('video-en')}
-                  className="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded transition"
-                >
-                  🎥 Watch CV Video (English)
-                </button>
               </div>
             </div>
           </motion.div>
         )
     }
   }
-
-  const renderVideo = (src: string) => (
-    <div className="fixed inset-0 z-50 bg-black bg-opacity-90 flex flex-col">
-      <div className="flex justify-end p-4">
-        <button
-          onClick={closeAll}
-          className="text-white hover:text-red-500 text-2xl"
-        >
-          <IoClose />
-        </button>
-      </div>
-      <div className="flex-grow flex items-center justify-center p-4">
-        <video
-          src={src}
-          controls
-          autoPlay
-          className="w-full max-w-4xl rounded-xl shadow-lg"
-        >
-          Your browser does not support the video tag.
-        </video>
-      </div>
-    </div>
-  )
 
   return (
     <AnimatePresence>
