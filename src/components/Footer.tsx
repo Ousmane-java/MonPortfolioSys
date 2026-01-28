@@ -28,7 +28,7 @@ export default function Footer() {
           <a href="https://www.linkedin.com/in/ousmane-drame-83858a334/" target="_blank" rel="noopener noreferrer" className="hover:text-blue-500 transition">
             <Linkedin className="w-6 h-6" />
           </a>
-          <a href="mailto:ousmanedrame.work@gmail.com" className="hover:text-blue-500 transition">
+          <a href="contact@ousmanedrame.com" className="hover:text-blue-500 transition">
             <Mail className="w-6 h-6" />
           </a>
           <a href="https://x.com/Ousmane2028" target="_blank" rel="noopener noreferrer" className="hover:text-blue-500 transition">
@@ -38,7 +38,7 @@ export default function Footer() {
 
         {/* Copyright */}
         <div className="text-sm text-gray-500 dark:text-gray-400 text-center">
-          © {new Date().getFullYear()} <span className="text-black dark:text-white font-semibold">Ousmane Drame</span> — v1.0.0
+          © {new Date().getFullYear()} <span className="text-black dark:text-white font-semibold">Ousmane Drame</span> — v2.0.0
         </div>
       </div>
 

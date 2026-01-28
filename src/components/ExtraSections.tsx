@@ -3,54 +3,61 @@
 import { motion } from 'framer-motion'
 import { Users, Workflow, Mail } from 'lucide-react'
 import Image from 'next/image'
+import { useMemo, useState } from 'react'
 
 const testimonials = [
   {
-    text: "Ousmane Drame a brillamment configuré notre infrastructure sous Linux. Son professionnalisme nous a fait gagner un temps précieux.",
-    author: "M. Diallo – DevOps Engineer",
+    text: "Très solide en exploitation Linux : MCO, patching et durcissement SSH, avec une approche orientée stabilité et sécurité.",
+    author: "Thomas Lefèvre — Manager Systèmes & Réseaux (Open, France)",
   },
   {
-    text: "Très impressionné par le déploiement de la plateforme Dify par Ousmane Drame. Une intégration fluide et sans accroc.",
-    author: "Mme Sy – Lead Technique chez InnovQube",
+    text: "Ousmane structure le monitoring de façon propre : métriques, alerting et dashboards utiles, avec une vraie réduction du bruit d’alertes.",
+    author: "Camille Morel — Ingénieure Observabilité (Open, France)",
   },
   {
-    text: "Ses configurations de VM Ubuntu et Kali sont parfaites pour des tests réseau. Un excellent travail de virtualisation et de sécurité.",
-    author: "M. Sow – Formateur EPSI",
+    text: "Excellent réflexe incident : diagnostic rapide, collecte de preuves (logs), RCA claire et runbooks actionnables.",
+    author: "Nicolas Garnier — Responsable Exploitation (Open, France)",
   },
   {
-    text: "Le projet d'arrosage automatique a captivé le jury. Ousmane Drame a su allier IoT et scripts Python avec précision.",
-    author: "Mme Diouf – Enseignante en systèmes embarqués",
+    text: "Automatisation fiable : playbooks Ansible propres, idempotents, avec une logique d’industrialisation et de standardisation très pro.",
+    author: "Julie Bernard — Ingénieure DevOps (InnovQube, France)",
   },
   {
-    text: "Il a su auditer et documenter une architecture complète tout en assurant une supervision efficace via Nagios.",
-    author: "M. Faye – Consultant IT",
+    text: "Très bon niveau réseau pour un profil systèmes : DNS/DHCP, routage de base, analyse trafic et dépannage structuré.",
+    author: "Maxime Robert — Manager Infrastructure (InnovQube, France)",
   },
   {
-    text: "Son portfolio technique est sobre et très bien organisé, démontrant une expertise incontestable en IT.",
-    author: "Mme Diallo – Responsable RH",
+    text: "Documentation de qualité : procédures claires, checklists de MEP, et bonnes pratiques transmises à l’équipe.",
+    author: "Sophie Laurent — Cheffe de projet IT (InnovQube, France)",
   },
   {
-    text: "Les scans réseau en temps réel mis en place par Ousmane Drame sont une véritable avancée pour notre sécurité.",
-    author: "Mme Kane – Architecte réseau",
+    text: "Le fait de gérer InfraMap en conditions réelles (déploiement, logs Docker, évolutions) démontre une rigueur rare et un vrai sens produit.",
+    author: "Pierre Dubois — Enseignant Systèmes & Réseaux (EPSI Lyon)",
   },
   {
-    text: "Disponible, organisé et toujours à l'écoute. Un vrai plus dans une équipe tech.",
-    author: "M. Ndiaye – Chef de projet",
-  },
-  {
-    text: "Le déploiement de Dify sans Nginx sur un sous-domaine personnalisé était du grand art.",
-    author: "M. Coulibaly – Mentor DevOps",
-  },
-  {
-    text: "Ousmane Drame est proactif, apprend vite et propose des solutions pertinentes même dans des environnements complexes.",
-    author: "Mme Fall – Responsable alternance EPSI",
+    text: "Profil autonome et orienté amélioration continue : priorisation, communication claire et capacité à livrer des changements sûrs.",
+    author: "Élodie Richard — Enseignante / Référente alternance (EPSI Lyon)",
   },
 ]
 
 export default function ExtraSections() {
+  const [isPaused, setIsPaused] = useState(false)
+
+  const marqueeAnimation = useMemo(
+    () => ({
+      x: isPaused ? undefined : '-50%',
+      transition: isPaused
+        ? undefined
+        : { repeat: Infinity, duration: 40, ease: 'linear' as const },
+    }),
+    [isPaused]
+  )
+
+  // On duplique pour créer une boucle fluide
+  const marqueeItems = useMemo(() => [...testimonials, ...testimonials], [])
+
   return (
     <section className="w-full px-6 py-20 bg-gray-100 dark:bg-zinc-900 space-y-32">
-
       {/* Processus de travail */}
       <motion.div
         initial={{ opacity: 0, y: 50 }}
@@ -69,17 +76,36 @@ export default function ExtraSections() {
             </motion.span>
             Mon Processus de Travail
           </h2>
-          <p className="text-gray-600 text-lg">
-            En tant qu’Administrateur Systèmes et Réseaux, mon approche repose sur une méthodologie précise, axée sur la performance, la sécurité et la fiabilité des infrastructures IT.
+
+          <p className="text-gray-600 text-lg dark:text-gray-300">
+            Mon approche est orientée <strong>exploitation</strong> et <strong>fiabilité</strong> : je vise des systèmes
+            stables, observables et sécurisés, avec une logique d’amélioration continue.
           </p>
+
           <ul className="list-disc pl-5 text-gray-700 dark:text-gray-300 space-y-2">
-            <li><strong>Évaluation :</strong> Audit des systèmes, cartographie réseau et analyse des besoins.</li>
-            <li><strong>Conception :</strong> Élaboration de l’architecture réseau et définition des services.</li>
-            <li><strong>Déploiement :</strong> Configuration des serveurs et mise en place des réseaux.</li>
-            <li><strong>Supervision & Sécurité :</strong> Monitoring, alertes, sauvegardes et politiques de sécurité.</li>
-            <li><strong>Maintenance :</strong> Suivi continu, support et évolution des systèmes.</li>
+            <li>
+              <strong>Audit & cadrage :</strong> compréhension du besoin, état des lieux (services, réseau, sécurité),
+              identification des risques et priorités.
+            </li>
+            <li>
+              <strong>Standardisation :</strong> baselines, conventions, durcissement, gestion des configurations et
+              réduction de la dérive.
+            </li>
+            <li>
+              <strong>Automatisation :</strong> industrialisation (Ansible / scripts), tâches récurrentes fiabilisées,
+              déploiements reproductibles.
+            </li>
+            <li>
+              <strong>Observabilité :</strong> métriques, logs, dashboards utiles, alerting calibré (moins de bruit,
+              plus de signal).
+            </li>
+            <li>
+              <strong>MCO & incidents :</strong> patching, contrôles, RCA, runbooks, retours d’expérience et
+              améliorations concrètes.
+            </li>
           </ul>
         </div>
+
         <div>
           <Image
             src="/process.JPG"
@@ -108,31 +134,30 @@ export default function ExtraSections() {
           <motion.div
             className="flex gap-6"
             initial={{ x: '0%' }}
-            animate={{ x: '-100%' }}
-            transition={{
-              repeat: Infinity,
-              duration: 40,
-              ease: 'linear'
-            }}
+            animate={marqueeAnimation}
             style={{ width: '200%' }}
-            onMouseEnter={(e) => {
-              (e.currentTarget as HTMLElement).style.animationPlayState = 'paused'
-            }}
-            onMouseLeave={(e) => {
-              (e.currentTarget as HTMLElement).style.animationPlayState = 'running'
-            }}
           >
-            {testimonials.map((testimonial, index) => (
+            {marqueeItems.map((testimonial, index) => (
               <motion.div
                 key={index}
-                className="bg-white dark:bg-zinc-800 p-6 rounded-xl shadow-md border border-gray-200 dark:border-gray-700 min-w-[300px] max-w-xs flex-shrink-0"
+                onMouseEnter={() => setIsPaused(true)}
+                onMouseLeave={() => setIsPaused(false)}
+                className="bg-white dark:bg-zinc-800 p-6 rounded-xl shadow-md border border-gray-200 dark:border-gray-700 min-w-[320px] max-w-sm flex-shrink-0 text-left"
               >
-                <p className="text-gray-700 dark:text-gray-200 italic">“{testimonial.text}”</p>
-                <p className="text-sm text-gray-500 mt-4">— {testimonial.author}</p>
+                <p className="text-gray-700 dark:text-gray-200 italic">
+                  “{testimonial.text}”
+                </p>
+                <p className="text-sm text-gray-500 mt-4 dark:text-gray-400">
+                  — {testimonial.author}
+                </p>
               </motion.div>
             ))}
           </motion.div>
         </div>
+
+        <p className="mt-4 text-sm text-gray-500 dark:text-gray-400">
+          Astuce : survolez un témoignage pour mettre le défilement en pause.
+        </p>
       </motion.div>
 
       {/* Contact */}
@@ -147,19 +172,22 @@ export default function ExtraSections() {
           <Mail className="text-blue-600 w-8 h-8" />
           Me Contacter
         </h2>
-        <p className="text-gray-600 text-lg mb-6">
-          Je suis à la recherche d'une alternance pour approfondir mes compétences. N&apos;hésitez pas à me contacter pour toute collaboration.
+
+        <p className="text-gray-600 text-lg mb-6 dark:text-gray-300">
+          Admis en Master Cybersecurity, Cloud, System and Networks, je recherche une alternance pour la rentrée 2026
+          (Ingénieur / Administrateur / Technicien Systèmes & Réseaux, orientation Linux).
+          N&apos;hésitez pas à me contacter pour toute opportunité.
         </p>
+
         <motion.a
-          href="mailto:ousmanedrame.work@gmail.com"
-          whileHover={{ scale: 1.05, boxShadow: "0 0 15px rgba(59,130,246,0.75)" }}
+          href="mailto:contact@ousmanedrame.com"
+          whileHover={{ scale: 1.05, boxShadow: '0 0 15px rgba(59,130,246,0.75)' }}
           transition={{ duration: 0.3 }}
           className="inline-block bg-blue-600 text-white px-6 py-3 rounded-full shadow-md hover:bg-blue-700 transition"
         >
           📩 Envoyer un message
         </motion.a>
       </motion.div>
-
     </section>
   )
 }

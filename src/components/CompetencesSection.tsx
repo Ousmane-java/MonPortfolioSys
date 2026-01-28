@@ -1,5 +1,4 @@
-/* eslint-disable react/no-unescaped-entities */
-
+//src/components/CompetencesSection.tsx
 'use client'
 
 import { Section } from '@/components/Section'
@@ -13,9 +12,9 @@ export default function CompetencesSection() {
         <h2 className="text-3xl font-bold text-center mb-8 text-gray-800 dark:text-gray-100">
           COMPÉTENCES TECHNIQUES
         </h2>
-        
+
         <div className="space-y-12">
-          {/* Administration Systèmes et Réseaux - entrée depuis la gauche */}
+          {/* Linux & Infrastructure */}
           <motion.div 
             className="bg-gray-100 dark:bg-zinc-800 rounded-xl p-6 shadow-lg"
             initial={{ opacity: 0, x: -150 }}
@@ -26,18 +25,20 @@ export default function CompetencesSection() {
             <div className="flex items-center mb-4">
               <FaServer className="text-blue-600 mr-3" size={30} />
               <h3 className="text-2xl font-semibold text-gray-800 dark:text-gray-100">
-                Administration Systèmes et Réseaux
+                Linux & Infrastructure (Systèmes / Réseaux / Sécurité)
               </h3>
             </div>
             <ul className="list-disc pl-8 space-y-2 text-gray-700 dark:text-gray-300">
-              <li>Installation, configuration et maintenance de serveurs (Linux et Windows Server)</li>
-              <li>Services réseau : DHCP, DNS, FTP, TFTP, NTP, NFS, Apache/Nginx</li>
-              <li>Routage, VLANs, pare-feu, surveillance réseau (SNMP, Nagios, Zabbix)</li>
-              <li>Supervision et monitoring d'infrastructure (Centreon, Grafana)</li>
+              <li>Administration Linux : installation, durcissement, patching, systemd, gestion des services</li>
+              <li>Réseau : adressage, VLAN, routage, DNS/DHCP, reverse proxy, troubleshooting (tcpdump, ss, journalctl)</li>
+              <li>Sécurité opérationnelle : SSH hardening, gestion des droits (sudo/RBAC), principes moindre privilège</li>
+              <li>Services d’infra : Nginx/Apache, Samba/NFS, certificats TLS/Let’s Encrypt</li>
+              <li>Stockage : LVM, partitions, permissions, montages, quotas, stratégies de sauvegarde</li>
+              <li>Documentation d’exploitation : procédures, standards, runbooks</li>
             </ul>
           </motion.div>
-          
-          {/* Systèmes d’Exploitation, Virtualisation & Stockage - entrée depuis la droite */}
+
+          {/* Cloud, Virtualisation & Conteneurs */}
           <motion.div 
             className="bg-gray-100 dark:bg-zinc-800 rounded-xl p-6 shadow-lg"
             initial={{ opacity: 0, x: 150 }}
@@ -48,18 +49,19 @@ export default function CompetencesSection() {
             <div className="flex items-center mb-4">
               <FaDesktop className="text-purple-600 mr-3" size={30} />
               <h3 className="text-2xl font-semibold text-gray-800 dark:text-gray-100">
-                Systèmes d’Exploitation, Virtualisation & Stockage
+                Cloud, Virtualisation & Conteneurs
               </h3>
             </div>
             <ul className="list-disc pl-8 space-y-2 text-gray-700 dark:text-gray-300">
-              <li>Environnements : Linux (Debian, Ubuntu, CentOS), Windows</li>
-              <li>Virtualisation : VMware Workstation, VMware ESXi, VirtualBox, Proxmox</li>
-              <li>Conteneurisation : Docker</li>
-              <li>Solutions de stockage : NAS, NFS, Samba, LVM</li>
+              <li>Virtualisation : ESXi/vSphere, Proxmox, VMware Workstation, VirtualBox (templates, snapshots, ressources)</li>
+              <li>Fondamentaux Cloud : compute, réseau, stockage, IAM, déploiement sur VM (AWS / GCP / OVHcloud)</li>
+              <li>Conteneurisation : Docker (images, registries, réseaux, volumes, bonnes pratiques)</li>
+              <li>Orchestration : bases Kubernetes (déploiements, services, ingress, config/secrets)</li>
+              <li>Architecture : environnements séparés (dev/staging/prod), haute disponibilité, scalabilité</li>
             </ul>
           </motion.div>
-          
-          {/* Scripting & Automatisation - entrée depuis le bas */}
+
+          {/* DevOps & Automatisation */}
           <motion.div 
             className="bg-gray-100 dark:bg-zinc-800 rounded-xl p-6 shadow-lg"
             initial={{ opacity: 0, y: 150 }}
@@ -70,16 +72,19 @@ export default function CompetencesSection() {
             <div className="flex items-center mb-4">
               <FaCode className="text-yellow-600 mr-3" size={30} />
               <h3 className="text-2xl font-semibold text-gray-800 dark:text-gray-100">
-                Scripting & Automatisation
+                DevOps & Automatisation
               </h3>
             </div>
             <ul className="list-disc pl-8 space-y-2 text-gray-700 dark:text-gray-300">
-              <li>Scripting Shell : Bash, PowerShell</li>
-              <li>Automatisation : Cron, Ansible (débutant), scripts Python pour automatisation système</li>
+              <li>Automatisation : Ansible (inventaires, rôles) et scripting (Bash, Python)</li>
+              <li>CI/CD : GitLab CI et GitHub Actions (build, tests, déploiement, secrets)</li>
+              <li>Infrastructure as Code : Terraform (modules, state, bonnes pratiques)</li>
+              <li>Gestion de configuration : standards, idempotence, pipelines reproductibles</li>
+              <li>Git : workflow propre (branches, PR/MR, tags/versionning, revues)</li>
             </ul>
           </motion.div>
-          
-          {/* Développement & Bases de Données - entrée depuis le haut */}
+
+          {/* Observabilité, Logs & Données */}
           <motion.div 
             className="bg-gray-100 dark:bg-zinc-800 rounded-xl p-6 shadow-lg"
             initial={{ opacity: 0, y: -150 }}
@@ -90,17 +95,19 @@ export default function CompetencesSection() {
             <div className="flex items-center mb-4">
               <FaDatabase className="text-green-600 mr-3" size={30} />
               <h3 className="text-2xl font-semibold text-gray-800 dark:text-gray-100">
-                Développement & Bases de Données
+                Observabilité, Logs & Données
               </h3>
             </div>
             <ul className="list-disc pl-8 space-y-2 text-gray-700 dark:text-gray-300">
-              <li>Développement : Python (Flask, Django), HTML/CSS (Bootstrap), JavaScript</li>
-              <li>Bases de données : MySQL / MariaDB, PostgreSQL, MongoDB</li>
-              <li>Conception de schémas et requêtage SQL (CRUD, jointures, vues)</li>
+              <li>Monitoring : Prometheus et Grafana (métriques, dashboards, alerting)</li>
+              <li>Supervision : Centreon / Nagios (checks, seuils, notifications)</li>
+              <li>Logs : Elastic Stack (collecte, recherche, corrélation) et journald</li>
+              <li>Sauvegardes : stratégies de rétention, restauration, tests de reprise (rsync, snapshots)</li>
+              <li>Bases de données : MySQL/MariaDB et PostgreSQL (sécurité, sauvegarde, exploitation)</li>
             </ul>
           </motion.div>
-          
-          {/* Gestion de Projet & Méthodologies - entrée avec zoom et rotation */}
+
+          {/* Support, Gestion de Projet & Développement */}
           <motion.div 
             className="bg-gray-100 dark:bg-zinc-800 rounded-xl p-6 shadow-lg"
             initial={{ opacity: 0, scale: 0.5, rotate: -20 }}
@@ -111,14 +118,15 @@ export default function CompetencesSection() {
             <div className="flex items-center mb-4">
               <FaProjectDiagram className="text-red-600 mr-3" size={30} />
               <h3 className="text-2xl font-semibold text-gray-800 dark:text-gray-100">
-                Gestion de Projet & Méthodologies
+                Support, Gestion de Projet & Développement
               </h3>
             </div>
             <ul className="list-disc pl-8 space-y-2 text-gray-700 dark:text-gray-300">
-              <li>Gestion de projet agile (Scrum, Kanban)</li>
-              <li>Utilisation d’outils collaboratifs : Jira, Trello, OpenProject</li>
-              <li>Suivi des tâches, sprints, tickets, documentation technique</li>
-              <li>Communication inter-équipes (rédaction de rapports, tableaux de bord)</li>
+              <li>Support & exploitation : diagnostic, analyse de causes, gestion d’incidents, escalade, SLA</li>
+              <li>Ticketing & suivi : GLPI et Jira (priorisation, reporting, communication)</li>
+              <li>Méthodes : Scrum/Kanban, organisation, documentation claire et orientée production</li>
+              <li>Développement utile à l’infra : API REST, scripts/outils internes, intégration et déploiement</li>
+              <li>Web : Next.js/React, TypeScript, Tailwind CSS (interfaces propres et maintenables)</li>
             </ul>
           </motion.div>
         </div>

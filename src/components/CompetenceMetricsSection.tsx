@@ -1,5 +1,4 @@
-/* eslint-disable react/no-unescaped-entities */
-
+//src/components/CompetenceMetricsSection.tsx
 'use client'
 
 import { motion, useInView, TargetAndTransition } from 'framer-motion'
@@ -122,22 +121,22 @@ export default function CompetenceMetricsSection() {
         </h2>
         <div className="grid md:grid-cols-3 gap-8">
           <CompetenceCard
-            title="Administration Systèmes"
-            percentage={67}
+            title="Système d'information"
+            percentage={50}
             Icon={Server}
             strokeColor="#3b82f6"
             initialVariant={{ opacity: 0, x: -100 }}
           />
           <CompetenceCard
-            title="Administration Réseau"
-            percentage={55}
+            title="Infrastructures"
+            percentage={30}
             Icon={Network}
             strokeColor="#10b981"
             initialVariant={{ opacity: 0, y: 100 }}
           />
           <CompetenceCard
-            title="DevOps"
-            percentage={70}
+            title="Autres"
+            percentage={20}
             Icon={Settings}
             strokeColor="#f59e0b"
             initialVariant={{ opacity: 0, x: 100 }}

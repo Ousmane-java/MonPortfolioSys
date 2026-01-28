@@ -1,5 +1,4 @@
-
-/* eslint-disable react/no-unescaped-entities */
+// src/components/ProjectsSection.tsx
 'use client'
 
 import { motion } from 'framer-motion'
@@ -8,25 +7,28 @@ import Link from 'next/link'
 
 const projects = [
   {
-    title: "AlloDocteur",
+    title: 'InfraMap',
     description:
-      "AlloDocteur est un projet de gestion de prise de rendez-vous chez un médecin réalisé entièrement en Laravel. Ce système innovant facilite l'accès aux soins au Sénégal en permettant aux patients de prendre rendez-vous rapidement et aux médecins de gérer leur planning efficacement. Ce projet démontre ma capacité à développer des solutions qui améliorent la qualité des services de santé.",
-    github: "https://github.com/Ousmane-java/AlloDocteurProject",
-    image: "/projects/alloDocteur.jpg",
+      "InfraMap est une plateforme SaaS de gestion de parc serveurs pensée pour les équipes infra et MSP. Elle centralise l’inventaire des serveurs, des clients et de leurs contrats dans une vue claire, afin de piloter l’infrastructure au même endroit. La plateforme intègre une supervision en temps réel (état, métriques, alertes) et une vue unifiée par client pour suivre la disponibilité, les engagements, les incidents et l’historique des actions. Objectif : réduire la dispersion des informations, gagner du temps au quotidien et fiabiliser le suivi des parcs multi-clients.",
+    github: 'https://www.inframap.io',
+    image: '/projects/inframap.jpg', // ✅ même dossier que les autres images
+    cta: 'Voir InfraMap →',
   },
   {
-    title: "Expert",
-    description:
-      "Expert est un logiciel de gestion de stock et de génération de tickets de caisse. Ce projet permet aux commerçants de suivre l'évolution de leur stock, de recevoir des notifications en cas de rupture imminente et de générer automatiquement un fichier d'inventaire en renseignant seulement les dates. Un outil indispensable pour une gestion optimale des commerces.",
-    github: "https://github.com/Ousmane-java/ticketCaisseProject",
-    image: "/projects/expert.jpg",
-  },
-  {
-    title: "Seahawks Monitoring System",
+    title: 'Seahawks Monitoring System',
     description:
       "Seahawks Monitoring est une solution de scan réseau automatisé dotée d'une interface web intuitive, d'un serveur de réception distant et d'un système de transmission sécurisé des résultats d'analyse. Réalisé dans le cadre de ma formation en Administration Systèmes et Réseaux à l'EPSI Lyon, ce projet scanne automatiquement les machines d'un réseau local, détecte les ports ouverts et envoie les résultats à un serveur central hébergé dans le Cloud. Un véritable atout pour la sécurité et la gestion des infrastructures réseaux.",
-    github: "https://github.com/Ousmane-java/MSPR1-EPSI",
-    image: "/projects/seahawks.jpg",
+    github: 'https://github.com/Ousmane-java/MSPR1-EPSI',
+    image: '/projects/seahawks.jpg',
+    cta: 'Voir sur GitHub →',
+  },
+  {
+    title: 'Seahawks Nester & Infrastructure MSPR',
+    description:
+      "Projet majeur réalisé dans le cadre de la MSPR TPTE512, Seahawks Nester est une plateforme d'infrastructure complète conçue pour NFL IT. Ce projet regroupe plusieurs missions : création d'une infrastructure virtuelle sous ESXi, mise en place de services critiques (DHCP, DNS, Ticketing), déploiement d'un cluster haute disponibilité pour l'application web, configuration de firewalls pfSense, mise en œuvre d'un tunnel VPN IPsec, supervision avancée avec Zabbix, et système de télémaintenance sécurisé basé sur tunnel SSH inversé. Le tout dans une logique DevOps incluant GitLab CE et MariaDB. Ce projet illustre la maîtrise d’un écosystème complet d'administration système et réseau, orienté haute disponibilité et sécurité.",
+    github: 'https://github.com/Ousmane-java/MSPR1-EPSI',
+    image: '/projects/mspr.JPG',
+    cta: 'Voir sur GitHub →',
   },
 ]
 
@@ -44,7 +46,8 @@ export default function ProjectsSection() {
         >
           MES PROJETS
         </motion.h2>
-        {/* Pour chaque projet, une carte pleine largeur divisée en deux colonnes */}
+
+        {/* Cartes projets */}
         {projects.map((project, index) => (
           <motion.div
             key={index}
@@ -71,6 +74,7 @@ export default function ProjectsSection() {
                 />
               </motion.div>
             </div>
+
             {/* Colonne droite : Texte et bouton */}
             <div className="w-full md:w-1/2 p-6 flex flex-col justify-center">
               <motion.h3
@@ -81,6 +85,7 @@ export default function ProjectsSection() {
               >
                 {project.title}
               </motion.h3>
+
               <motion.p
                 className="text-gray-700 dark:text-gray-300 mb-6"
                 initial={{ opacity: 0, x: 50 }}
@@ -89,6 +94,7 @@ export default function ProjectsSection() {
               >
                 {project.description}
               </motion.p>
+
               <motion.div
                 initial={{ opacity: 0 }}
                 whileInView={{ opacity: 1 }}
@@ -100,7 +106,7 @@ export default function ProjectsSection() {
                   rel="noopener noreferrer"
                   className="inline-block bg-blue-600 text-white px-6 py-3 rounded-full hover:bg-blue-700 transition"
                 >
-                  Voir sur GitHub &rarr;
+                  {project.cta}
                 </Link>
               </motion.div>
             </div>
