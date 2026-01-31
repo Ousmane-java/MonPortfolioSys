@@ -55,7 +55,7 @@ export default function AboutPreview() {
           {/* Badges */}
           <div className="mb-4 flex flex-wrap items-center gap-2">
             <span className="inline-flex items-center rounded-full bg-gray-100 px-3 py-1 text-sm font-medium text-gray-700">
-              Ingénieur Systèmes
+              Systems &amp; Information Security Engineering Student
             </span>
 
             <Link
