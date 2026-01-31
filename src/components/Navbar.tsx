@@ -12,18 +12,38 @@ const navLinks = [
   { href: '/#experience', label: 'Expérience' },
   { href: '/#competences', label: 'Compétences' },
   { href: '/#projets', label: 'Projets' },
+  // ✅ Nouvelle page de documentation
+  { href: '/docs', label: 'Docs' },
 ]
 
 const socialLinks = [
-  { href: 'https://www.linkedin.com/in/ousmane-drame-83858a334/', icon: <FaLinkedin size={20} />, color: 'hover:text-blue-600' },
-  { href: 'https://github.com/Ousmane-java', icon: <FaGithub size={20} />, color: 'hover:text-gray-900' },
-  { href: 'https://x.com/Ousmane2028', icon: <FaTwitter size={20} />, color: 'hover:text-sky-500' },
-  { href: 'https://www.instagram.com/ousmane_draame/', icon: <FaInstagram size={20} />, color: 'hover:text-pink-600' },
+  {
+    href: 'https://www.linkedin.com/in/ousmane-drame-83858a334/',
+    icon: <FaLinkedin size={20} />,
+    color: 'hover:text-blue-600',
+  },
+  {
+    href: 'https://github.com/Ousmane-java',
+    icon: <FaGithub size={20} />,
+    color: 'hover:text-gray-900',
+  },
+  {
+    href: 'https://x.com/Ousmane2028',
+    icon: <FaTwitter size={20} />,
+    color: 'hover:text-sky-500',
+  },
+  {
+    href: 'https://www.instagram.com/ousmane_draame/',
+    icon: <FaInstagram size={20} />,
+    color: 'hover:text-pink-600',
+  },
 ]
 
 export default function Navbar() {
   const [isMobileOpen, setIsMobileOpen] = useState(false)
   const [isCVOpen, setIsCVOpen] = useState(false)
+
+  const handleMobileNavigate = () => setIsMobileOpen(false)
 
   return (
     <>
@@ -44,7 +64,7 @@ export default function Navbar() {
 
             {/* Desktop nav */}
             <div className="hidden md:flex space-x-6">
-              {navLinks.map(link =>
+              {navLinks.map((link) =>
                 link.label === 'CV' ? (
                   <button
                     key={link.href}
@@ -84,6 +104,7 @@ export default function Navbar() {
               <button
                 onClick={() => setIsMobileOpen(!isMobileOpen)}
                 className="p-2 rounded-md text-gray-800 hover:text-blue-600 hover:bg-gray-200 transition"
+                aria-label="Menu"
               >
                 <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   {isMobileOpen ? (
@@ -99,25 +120,34 @@ export default function Navbar() {
 
         {/* Mobile menu */}
         {isMobileOpen && (
-          <motion.div initial={{ height: 0 }} animate={{ height: 'auto' }} transition={{ duration: 0.3 }} className="md:hidden bg-white">
+          <motion.div
+            initial={{ height: 0 }}
+            animate={{ height: 'auto' }}
+            transition={{ duration: 0.3 }}
+            className="md:hidden bg-white"
+          >
             <div className="px-4 pt-4 pb-3 space-y-2">
-              {navLinks.map(link =>
+              {navLinks.map((link) =>
                 link.label === 'CV' ? (
                   <button
                     key={link.href}
-                    onClick={() => { setIsCVOpen(true); setIsMobileOpen(false) }}
+                    onClick={() => {
+                      setIsCVOpen(true)
+                      setIsMobileOpen(false)
+                    }}
                     className="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 transition"
                   >
                     {link.label}
                   </button>
                 ) : (
-                  <Link key={link.href} href={link.href}>
+                  <Link key={link.href} href={link.href} onClick={handleMobileNavigate}>
                     <p className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 cursor-pointer transition">
                       {link.label}
                     </p>
                   </Link>
                 )
               )}
+
               <div className="pt-3 flex justify-around">
                 {socialLinks.map(({ href, icon, color }, i) => (
                   <motion.a
