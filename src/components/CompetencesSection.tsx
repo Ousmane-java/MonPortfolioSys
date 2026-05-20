@@ -1,136 +1,217 @@
-//src/components/CompetencesSection.tsx
 'use client'
 
-import { Section } from '@/components/Section'
 import { motion } from 'framer-motion'
-import { FaServer, FaDesktop, FaCode, FaDatabase, FaProjectDiagram } from 'react-icons/fa'
+
+interface Skill { name: string; level: number }
+interface Panel { tag: string; label: string; color: string; skills: Skill[] }
+
+const panels: Panel[] = [
+  {
+    tag: 'SYS',
+    label: 'Infrastructure & Systèmes',
+    color: '#00d4ff',
+    skills: [
+      { name: 'Linux (Ubuntu / Debian)',    level: 5 },
+      { name: 'systemd & gestion services', level: 4 },
+      { name: 'SSH / RBAC / sudo',          level: 4 },
+      { name: 'Patch Management',           level: 4 },
+      { name: 'Baseline & Hardening',       level: 4 },
+      { name: 'LVM / Stockage',             level: 3 },
+      { name: 'Runbooks & Documentation',   level: 4 },
+    ],
+  },
+  {
+    tag: 'NET',
+    label: 'Réseau & Sécurité',
+    color: '#818cf8',
+    skills: [
+      { name: 'TCP/IP / Modèle OSI',        level: 4 },
+      { name: 'VLAN / Routage',             level: 3 },
+      { name: 'DNS / DHCP',                 level: 3 },
+      { name: 'Firewall / ACL',             level: 3 },
+      { name: 'SSH Hardening',              level: 4 },
+      { name: 'tcpdump / Analyse réseau',   level: 3 },
+      { name: 'VPN (bases)',                level: 2 },
+    ],
+  },
+  {
+    tag: 'AUTO',
+    label: 'Automatisation & DevOps',
+    color: '#f59e0b',
+    skills: [
+      { name: 'Ansible',                    level: 4 },
+      { name: 'Bash Scripting',             level: 4 },
+      { name: 'Python',                     level: 3 },
+      { name: 'Git / GitHub',               level: 4 },
+      { name: 'CI/CD (GitHub Actions)',     level: 3 },
+      { name: 'Terraform (bases)',          level: 2 },
+    ],
+  },
+  {
+    tag: 'OBS',
+    label: 'Supervision & Observabilité',
+    color: '#00ff88',
+    skills: [
+      { name: 'Grafana',                    level: 3 },
+      { name: 'Prometheus',                 level: 3 },
+      { name: 'Centreon / Nagios',          level: 3 },
+      { name: 'journald / logs Linux',      level: 4 },
+      { name: 'ELK Stack (bases)',          level: 2 },
+      { name: 'Alerting & SLA',             level: 3 },
+    ],
+  },
+  {
+    tag: 'SUP',
+    label: 'Support Informatique',
+    color: '#f97316',
+    skills: [
+      { name: 'Diagnostic N2/N3',           level: 4 },
+      { name: 'RCA (Root Cause Analysis)',  level: 4 },
+      { name: 'GLPI / Ticketing ITSM',      level: 3 },
+      { name: 'Jira',                        level: 3 },
+      { name: 'SLA & Priorisation',         level: 3 },
+      { name: 'Communication technique',    level: 4 },
+      { name: 'Rédaction de runbooks',      level: 4 },
+    ],
+  },
+  {
+    tag: 'DEV',
+    label: 'Dev, Cloud & Virtualisation',
+    color: '#a78bfa',
+    skills: [
+      { name: 'Docker',                     level: 3 },
+      { name: 'VMware ESXi / Proxmox',      level: 3 },
+      { name: 'Kubernetes (bases)',          level: 2 },
+      { name: 'AWS / GCP / OVH (bases)',    level: 2 },
+      { name: 'Laravel / PHP',              level: 3 },
+      { name: 'Next.js / React',            level: 3 },
+      { name: 'MySQL / PostgreSQL',         level: 3 },
+    ],
+  },
+]
+
+function Dots({ level, color }: { level: number; color: string }) {
+  return (
+    <span className="flex gap-0.5 ml-auto shrink-0">
+      {Array.from({ length: 5 }, (_, i) => (
+        <span
+          key={i}
+          className="w-1.5 h-1.5 rounded-full"
+          style={{ background: i < level ? color : 'var(--card-border)' }}
+        />
+      ))}
+    </span>
+  )
+}
 
 export default function CompetencesSection() {
   return (
-    <Section customDelay={0.4}>
+    <section className="py-20 px-4" id="competences">
       <div className="max-w-5xl mx-auto">
-        <h2 className="text-3xl font-bold text-center mb-8 text-gray-800 dark:text-gray-100">
-          COMPÉTENCES TECHNIQUES
-        </h2>
 
-        <div className="space-y-12">
-          {/* Linux & Infrastructure */}
-          <motion.div 
-            className="bg-gray-100 dark:bg-zinc-800 rounded-xl p-6 shadow-lg"
-            initial={{ opacity: 0, x: -150 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-          >
-            <div className="flex items-center mb-4">
-              <FaServer className="text-blue-600 mr-3" size={30} />
-              <h3 className="text-2xl font-semibold text-gray-800 dark:text-gray-100">
-                Linux & Infrastructure (Systèmes / Réseaux / Sécurité)
-              </h3>
-            </div>
-            <ul className="list-disc pl-8 space-y-2 text-gray-700 dark:text-gray-300">
-              <li>Administration Linux : installation, durcissement, patching, systemd, gestion des services</li>
-              <li>Réseau : adressage, VLAN, routage, DNS/DHCP, reverse proxy, troubleshooting (tcpdump, ss, journalctl)</li>
-              <li>Sécurité opérationnelle : SSH hardening, gestion des droits (sudo/RBAC), principes moindre privilège</li>
-              <li>Services d’infra : Nginx/Apache, Samba/NFS, certificats TLS/Let’s Encrypt</li>
-              <li>Stockage : LVM, partitions, permissions, montages, quotas, stratégies de sauvegarde</li>
-              <li>Documentation d’exploitation : procédures, standards, runbooks</li>
-            </ul>
-          </motion.div>
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="mb-12"
+        >
+          <span className="font-mono text-xs" style={{ color: 'var(--accent)' }}>
+            // system.status
+          </span>
+          <h2 className="text-3xl font-bold mt-1" style={{ color: 'var(--text-1)' }}>
+            Compétences Techniques
+          </h2>
+          <div className="mt-2 h-0.5 w-14 rounded" style={{ background: 'var(--accent)' }} />
+        </motion.div>
 
-          {/* Cloud, Virtualisation & Conteneurs */}
-          <motion.div 
-            className="bg-gray-100 dark:bg-zinc-800 rounded-xl p-6 shadow-lg"
-            initial={{ opacity: 0, x: 150 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-          >
-            <div className="flex items-center mb-4">
-              <FaDesktop className="text-purple-600 mr-3" size={30} />
-              <h3 className="text-2xl font-semibold text-gray-800 dark:text-gray-100">
-                Cloud, Virtualisation & Conteneurs
-              </h3>
-            </div>
-            <ul className="list-disc pl-8 space-y-2 text-gray-700 dark:text-gray-300">
-              <li>Virtualisation : ESXi/vSphere, Proxmox, VMware Workstation, VirtualBox (templates, snapshots, ressources)</li>
-              <li>Fondamentaux Cloud : compute, réseau, stockage, IAM, déploiement sur VM (AWS / GCP / OVHcloud)</li>
-              <li>Conteneurisation : Docker (images, registries, réseaux, volumes, bonnes pratiques)</li>
-              <li>Orchestration : bases Kubernetes (déploiements, services, ingress, config/secrets)</li>
-              <li>Architecture : environnements séparés (dev/staging/prod), haute disponibilité, scalabilité</li>
-            </ul>
-          </motion.div>
+        {/* Panels grid — 2 colonnes */}
+        <div className="grid md:grid-cols-2 gap-5">
+          {panels.map((panel, i) => (
+            <motion.div
+              key={panel.tag}
+              initial={{ opacity: 0, y: 28 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: i * 0.07 }}
+              className="glass rounded-xl overflow-hidden"
+            >
+              {/* Panel header */}
+              <div
+                className="px-5 py-3 flex items-center gap-3"
+                style={{
+                  borderBottom: `1px solid ${panel.color}28`,
+                  background: `${panel.color}08`,
+                }}
+              >
+                <span
+                  className="font-mono text-xs font-bold px-2 py-0.5 rounded"
+                  style={{ background: `${panel.color}18`, color: panel.color }}
+                >
+                  [{panel.tag}]
+                </span>
+                <span className="text-sm font-semibold" style={{ color: 'var(--text-1)' }}>
+                  {panel.label}
+                </span>
+                <span
+                  className="ml-auto w-2 h-2 rounded-full"
+                  style={{ background: panel.color, boxShadow: `0 0 6px ${panel.color}` }}
+                />
+              </div>
 
-          {/* DevOps & Automatisation */}
-          <motion.div 
-            className="bg-gray-100 dark:bg-zinc-800 rounded-xl p-6 shadow-lg"
-            initial={{ opacity: 0, y: 150 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-          >
-            <div className="flex items-center mb-4">
-              <FaCode className="text-yellow-600 mr-3" size={30} />
-              <h3 className="text-2xl font-semibold text-gray-800 dark:text-gray-100">
-                DevOps & Automatisation
-              </h3>
-            </div>
-            <ul className="list-disc pl-8 space-y-2 text-gray-700 dark:text-gray-300">
-              <li>Automatisation : Ansible (inventaires, rôles) et scripting (Bash, Python)</li>
-              <li>CI/CD : GitLab CI et GitHub Actions (build, tests, déploiement, secrets)</li>
-              <li>Infrastructure as Code : Terraform (modules, state, bonnes pratiques)</li>
-              <li>Gestion de configuration : standards, idempotence, pipelines reproductibles</li>
-              <li>Git : workflow propre (branches, PR/MR, tags/versionning, revues)</li>
-            </ul>
-          </motion.div>
-
-          {/* Observabilité, Logs & Données */}
-          <motion.div 
-            className="bg-gray-100 dark:bg-zinc-800 rounded-xl p-6 shadow-lg"
-            initial={{ opacity: 0, y: -150 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.6 }}
-          >
-            <div className="flex items-center mb-4">
-              <FaDatabase className="text-green-600 mr-3" size={30} />
-              <h3 className="text-2xl font-semibold text-gray-800 dark:text-gray-100">
-                Observabilité, Logs & Données
-              </h3>
-            </div>
-            <ul className="list-disc pl-8 space-y-2 text-gray-700 dark:text-gray-300">
-              <li>Monitoring : Prometheus et Grafana (métriques, dashboards, alerting)</li>
-              <li>Supervision : Centreon / Nagios (checks, seuils, notifications)</li>
-              <li>Logs : Elastic Stack (collecte, recherche, corrélation) et journald</li>
-              <li>Sauvegardes : stratégies de rétention, restauration, tests de reprise (rsync, snapshots)</li>
-              <li>Bases de données : MySQL/MariaDB et PostgreSQL (sécurité, sauvegarde, exploitation)</li>
-            </ul>
-          </motion.div>
-
-          {/* Support, Gestion de Projet & Développement */}
-          <motion.div 
-            className="bg-gray-100 dark:bg-zinc-800 rounded-xl p-6 shadow-lg"
-            initial={{ opacity: 0, scale: 0.5, rotate: -20 }}
-            whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.8 }}
-          >
-            <div className="flex items-center mb-4">
-              <FaProjectDiagram className="text-red-600 mr-3" size={30} />
-              <h3 className="text-2xl font-semibold text-gray-800 dark:text-gray-100">
-                Support, Gestion de Projet & Développement
-              </h3>
-            </div>
-            <ul className="list-disc pl-8 space-y-2 text-gray-700 dark:text-gray-300">
-              <li>Support & exploitation : diagnostic, analyse de causes, gestion d’incidents, escalade, SLA</li>
-              <li>Ticketing & suivi : GLPI et Jira (priorisation, reporting, communication)</li>
-              <li>Méthodes : Scrum/Kanban, organisation, documentation claire et orientée production</li>
-              <li>Développement utile à l’infra : API REST, scripts/outils internes, intégration et déploiement</li>
-              <li>Web : Next.js/React, TypeScript, Tailwind CSS (interfaces propres et maintenables)</li>
-            </ul>
-          </motion.div>
+              {/* Skills list */}
+              <div className="px-5 py-4 space-y-2.5">
+                {panel.skills.map((skill) => (
+                  <div key={skill.name} className="flex items-center gap-2">
+                    <span
+                      className="font-mono text-xs shrink-0"
+                      style={{ color: `${panel.color}90` }}
+                    >
+                      ›
+                    </span>
+                    <span className="text-sm" style={{ color: 'var(--text-2)' }}>
+                      {skill.name}
+                    </span>
+                    <Dots level={skill.level} color={panel.color} />
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+          ))}
         </div>
+
+        {/* Legend */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          className="mt-7 flex flex-wrap items-center gap-5 justify-center"
+        >
+          <span className="font-mono text-xs" style={{ color: 'var(--text-3)' }}>
+            niveau :
+          </span>
+          {[
+            { dots: 1, label: 'notions' },
+            { dots: 3, label: 'opérationnel' },
+            { dots: 5, label: 'expert' },
+          ].map(({ dots, label }) => (
+            <div key={label} className="flex items-center gap-1.5">
+              <span className="flex gap-0.5">
+                {Array.from({ length: 5 }, (_, i) => (
+                  <span
+                    key={i}
+                    className="w-1.5 h-1.5 rounded-full"
+                    style={{ background: i < dots ? 'var(--accent)' : 'var(--card-border)' }}
+                  />
+                ))}
+              </span>
+              <span className="font-mono text-xs" style={{ color: 'var(--text-3)' }}>
+                = {label}
+              </span>
+            </div>
+          ))}
+        </motion.div>
       </div>
-    </Section>
+    </section>
   )
 }

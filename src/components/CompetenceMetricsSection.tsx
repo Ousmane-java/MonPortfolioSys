@@ -96,7 +96,7 @@ const CompetenceCard = ({
 }) => {
   return (
     <motion.div
-      className="bg-gray-100 dark:bg-zinc-800 rounded-xl p-6 shadow-lg flex flex-col items-center"
+      className="glass rounded-xl p-6 shadow-lg flex flex-col items-center"
       initial={initialVariant}
       whileInView={{ opacity: 1, y: 0, x: 0 }}
       viewport={{ once: true }}
@@ -114,9 +114,9 @@ const CompetenceCard = ({
 
 export default function CompetenceMetricsSection() {
   return (
-    <section className="py-16 bg-white dark:bg-zinc-900">
+    <section className="py-16">
       <div className="max-w-5xl mx-auto px-4">
-        <h2 className="text-3xl font-bold text-center mb-12 text-gray-800 dark:text-gray-100">
+        <h2 className="text-3xl font-bold text-center mb-12" style={{ color: 'var(--text-1)' }}>
           MES COMPÉTENCES
         </h2>
         <div className="grid md:grid-cols-3 gap-8">

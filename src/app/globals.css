@@ -3,36 +3,86 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ─── Design tokens ─── */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg:           #f0f4ff;
+  --card-bg:      rgba(255, 255, 255, 0.78);
+  --card-border:  rgba(37, 99, 235, 0.15);
+  --text-1:       #0f172a;
+  --text-2:       #475569;
+  --text-3:       #94a3b8;
+  --accent:       #2563eb;
+  --accent2:      #059669;
+  --accent-muted: rgba(37, 99, 235, 0.09);
+  --nav-bg:       rgba(240, 244, 255, 0.92);
+  --nav-border:   rgba(37, 99, 235, 0.12);
+  --tag-bg:       rgba(37, 99, 235, 0.09);
+  --tag-text:     #2563eb;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+[data-theme="dark"] {
+  --bg:           #0a0e1a;
+  --card-bg:      rgba(15, 23, 42, 0.85);
+  --card-border:  rgba(0, 212, 255, 0.15);
+  --text-1:       #e2e8f0;
+  --text-2:       #94a3b8;
+  --text-3:       #475569;
+  --accent:       #00d4ff;
+  --accent2:      #00ff88;
+  --accent-muted: rgba(0, 212, 255, 0.09);
+  --nav-bg:       rgba(10, 14, 26, 0.93);
+  --nav-border:   rgba(0, 212, 255, 0.13);
+  --tag-bg:       rgba(0, 212, 255, 0.09);
+  --tag-text:     #00d4ff;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg);
+  color: var(--text-1);
+  font-family: system-ui, -apple-system, sans-serif;
+  transition: background 0.3s ease, color 0.3s ease;
 }
 
-html {
-  scroll-behavior: smooth;
+html { scroll-behavior: smooth; }
+
+/* ─── Glass utility ─── */
+.glass {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
 }
 
-/* Masquer les overlays et debug injectés par Next.js / Vercel */
+/* ─── Nav & icon hover utilities ─── */
+.nav-link {
+  color: var(--text-2);
+  transition: color 0.15s ease;
+  cursor: pointer;
+  display: block;
+}
+.nav-link:hover { color: var(--accent); }
+
+.icon-btn {
+  color: var(--text-3);
+  transition: color 0.15s ease, transform 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+}
+.icon-btn:hover { color: var(--accent); transform: scale(1.15); }
+
+.theme-btn {
+  padding: 0.35rem;
+  border-radius: 0.375rem;
+  background: var(--accent-muted);
+  color: var(--text-2);
+  transition: background 0.15s ease, color 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+}
+.theme-btn:hover { background: var(--accent); color: #fff; }
+
+/* ─── Hide Next.js dev overlays ─── */
 .nextjs-portal,
 [data-nextjs-scroll-reset],
 #__next-build-watcher,
@@ -43,6 +93,5 @@ div[style*="position: fixed"][style*="bottom: 0"][style*="left: 0"] {
   visibility: hidden !important;
   opacity: 0 !important;
   pointer-events: none !important;
-  position: absolute !important;
   z-index: -9999 !important;
 }

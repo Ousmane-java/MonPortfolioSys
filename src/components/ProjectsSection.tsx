@@ -34,11 +34,12 @@ const projects = [
 
 export default function ProjectsSection() {
   return (
-    <section id="projets" className="py-16 bg-white dark:bg-zinc-900">
+    <section id="projets" className="py-16">
       <div className="max-w-6xl mx-auto px-4">
         {/* Titre de la section */}
         <motion.h2
-          className="text-3xl font-bold text-center mb-12 text-gray-800 dark:text-gray-100"
+          className="text-3xl font-bold text-center mb-12"
+          style={{ color: 'var(--text-1)' }}
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
@@ -51,7 +52,7 @@ export default function ProjectsSection() {
         {projects.map((project, index) => (
           <motion.div
             key={index}
-            className="flex flex-col md:flex-row items-center bg-gray-100 dark:bg-zinc-800 rounded-xl mb-12 overflow-hidden"
+            className="glass flex flex-col md:flex-row items-center rounded-xl mb-12 overflow-hidden"
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -78,7 +79,8 @@ export default function ProjectsSection() {
             {/* Colonne droite : Texte et bouton */}
             <div className="w-full md:w-1/2 p-6 flex flex-col justify-center">
               <motion.h3
-                className="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-4"
+                className="text-2xl font-bold mb-4"
+                style={{ color: 'var(--text-1)' }}
                 initial={{ opacity: 0, x: 50 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.8, delay: 0.2 }}
@@ -87,7 +89,8 @@ export default function ProjectsSection() {
               </motion.h3>
 
               <motion.p
-                className="text-gray-700 dark:text-gray-300 mb-6"
+                className="mb-6"
+                style={{ color: 'var(--text-2)' }}
                 initial={{ opacity: 0, x: 50 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.8, delay: 0.4 }}

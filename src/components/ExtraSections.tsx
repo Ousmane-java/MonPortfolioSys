@@ -57,7 +57,7 @@ export default function ExtraSections() {
   const marqueeItems = useMemo(() => [...testimonials, ...testimonials], [])
 
   return (
-    <section className="w-full px-6 py-20 bg-gray-100 dark:bg-zinc-900 space-y-32">
+    <section className="w-full px-6 py-20 space-y-32">
       {/* Processus de travail */}
       <motion.div
         initial={{ opacity: 0, y: 50 }}
@@ -67,7 +67,7 @@ export default function ExtraSections() {
         className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center"
       >
         <div className="space-y-4">
-          <h2 className="text-3xl font-bold text-gray-900 dark:text-gray-100 flex items-center gap-2">
+          <h2 className="text-3xl font-bold flex items-center gap-2" style={{ color: 'var(--text-1)' }}>
             <motion.span
               animate={{ rotate: 360 }}
               transition={{ repeat: Infinity, duration: 6, ease: 'linear' }}
@@ -77,12 +77,12 @@ export default function ExtraSections() {
             Mon Processus de Travail
           </h2>
 
-          <p className="text-gray-600 text-lg dark:text-gray-300">
+          <p className="text-lg" style={{ color: 'var(--text-2)' }}>
             Mon approche est orientée <strong>exploitation</strong> et <strong>fiabilité</strong> : je vise des systèmes
             stables, observables et sécurisés, avec une logique d’amélioration continue.
           </p>
 
-          <ul className="list-disc pl-5 text-gray-700 dark:text-gray-300 space-y-2">
+          <ul className="list-disc pl-5 space-y-2" style={{ color: 'var(--text-2)' }}>
             <li>
               <strong>Audit & cadrage :</strong> compréhension du besoin, état des lieux (services, réseau, sécurité),
               identification des risques et priorités.
@@ -125,7 +125,7 @@ export default function ExtraSections() {
         viewport={{ once: true }}
         className="max-w-6xl mx-auto text-center"
       >
-        <h2 className="text-3xl font-bold text-gray-900 dark:text-gray-100 flex justify-center items-center gap-2 mb-10">
+        <h2 className="text-3xl font-bold flex justify-center items-center gap-2 mb-10" style={{ color: 'var(--text-1)' }}>
           <Users className="text-green-600 w-8 h-8" />
           Témoignages & Retours
         </h2>
@@ -142,12 +142,12 @@ export default function ExtraSections() {
                 key={index}
                 onMouseEnter={() => setIsPaused(true)}
                 onMouseLeave={() => setIsPaused(false)}
-                className="bg-white dark:bg-zinc-800 p-6 rounded-xl shadow-md border border-gray-200 dark:border-gray-700 min-w-[320px] max-w-sm flex-shrink-0 text-left"
+                className="glass p-6 rounded-xl shadow-md min-w-[320px] max-w-sm flex-shrink-0 text-left"
               >
-                <p className="text-gray-700 dark:text-gray-200 italic">
+                <p className="italic" style={{ color: 'var(--text-2)' }}>
                   “{testimonial.text}”
                 </p>
-                <p className="text-sm text-gray-500 mt-4 dark:text-gray-400">
+                <p className="text-sm mt-4" style={{ color: 'var(--text-3)' }}>
                   — {testimonial.author}
                 </p>
               </motion.div>
@@ -168,12 +168,12 @@ export default function ExtraSections() {
         viewport={{ once: true }}
         className="max-w-4xl mx-auto text-center"
       >
-        <h2 className="text-3xl font-bold text-gray-900 dark:text-gray-100 flex justify-center items-center gap-2">
+        <h2 className="text-3xl font-bold flex justify-center items-center gap-2" style={{ color: 'var(--text-1)' }}>
           <Mail className="text-blue-600 w-8 h-8" />
           Me Contacter
         </h2>
 
-        <p className="text-gray-600 text-lg mb-6 dark:text-gray-300">
+        <p className="text-lg mb-6" style={{ color: 'var(--text-2)' }}>
           Admis en Master Cybersecurity, Cloud, System and Networks, je recherche une alternance pour la rentrée 2026
           (Ingénieur / Administrateur / Technicien Systèmes & Réseaux, orientation Linux).
           N&apos;hésitez pas à me contacter pour toute opportunité.

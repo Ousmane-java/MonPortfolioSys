@@ -1,55 +1,49 @@
-/* eslint-disable react/no-unescaped-entities */
-
 'use client'
 
 import { motion } from 'framer-motion'
-import { Github, Linkedin, Mail, Twitter, ArrowUp } from 'lucide-react'
+import { Github, Linkedin, Mail, Twitter } from 'lucide-react'
+
+const links = [
+  { href: 'https://github.com/Ousmane-java',                              icon: <Github   className="w-5 h-5" /> },
+  { href: 'https://www.linkedin.com/in/ousmane-drame-83858a334/',         icon: <Linkedin className="w-5 h-5" /> },
+  { href: 'mailto:contact@ousmanedrame.com',                              icon: <Mail     className="w-5 h-5" /> },
+  { href: 'https://x.com/Ousmane2028',                                    icon: <Twitter  className="w-5 h-5" /> },
+]
 
 export default function Footer() {
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' })
-  }
-
   return (
     <motion.footer
-      initial={{ opacity: 0, y: 40 }}
+      initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.8 }}
+      transition={{ duration: 0.6 }}
       viewport={{ once: true }}
-      className="w-full px-6 py-8 bg-zinc-100 dark:bg-zinc-900 text-gray-800 dark:text-gray-100 border-t border-gray-300 dark:border-gray-700 relative"
+      className="w-full px-6 py-8 glass"
+      style={{ borderTop: '1px solid var(--card-border)' }}
     >
-      <div className="max-w-6xl mx-auto flex flex-col items-center justify-center gap-4">
+      <div className="max-w-6xl mx-auto flex flex-col items-center gap-4">
 
-        {/* Réseaux sociaux */}
         <div className="flex items-center gap-5">
-          <a href="https://github.com/Ousmane-java" target="_blank" rel="noopener noreferrer" className="hover:text-blue-500 transition">
-            <Github className="w-6 h-6" />
-          </a>
-          <a href="https://www.linkedin.com/in/ousmane-drame-83858a334/" target="_blank" rel="noopener noreferrer" className="hover:text-blue-500 transition">
-            <Linkedin className="w-6 h-6" />
-          </a>
-          <a href="contact@ousmanedrame.com" className="hover:text-blue-500 transition">
-            <Mail className="w-6 h-6" />
-          </a>
-          <a href="https://x.com/Ousmane2028" target="_blank" rel="noopener noreferrer" className="hover:text-blue-500 transition">
-            <Twitter className="w-6 h-6" />
-          </a>
+          {links.map(({ href, icon }, i) => (
+            <a
+              key={i}
+              href={href}
+              target={href.startsWith('mailto') ? undefined : '_blank'}
+              rel="noopener noreferrer"
+              className="icon-btn"
+            >
+              {icon}
+            </a>
+          ))}
         </div>
 
-        {/* Copyright */}
-        <div className="text-sm text-gray-500 dark:text-gray-400 text-center">
-          © {new Date().getFullYear()} <span className="text-black dark:text-white font-semibold">Ousmane Drame</span> — v2.0.0
+        <div className="font-mono text-xs text-center" style={{ color: 'var(--text-3)' }}>
+          <span style={{ color: 'var(--accent)' }}>ousmane@portfolio</span>
+          <span style={{ color: 'var(--text-3)' }}>:~$ </span>
+          <span style={{ color: 'var(--text-2)' }}>
+            © {new Date().getFullYear()} Ousmane Drame — v3.0.0
+          </span>
         </div>
       </div>
-
-      {/* Bouton O pour remonter en haut */}
-      <button
-        onClick={scrollToTop}
-        className="absolute bottom-4 left-4 bg-blue-600 hover:bg-blue-700 text-white w-10 h-10 rounded-full shadow-md flex items-center justify-center font-bold text-lg transition-all"
-        aria-label="Remonter"
-      >
-        O
-      </button>
     </motion.footer>
   )
 }
