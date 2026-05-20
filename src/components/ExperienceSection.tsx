@@ -53,7 +53,7 @@ export default function ExperienceSection() {
         </h2>
 
         <div className="space-y-12">
-          {/* Expérience 1 : Stage Administrateur Systèmes & Réseaux */}
+          {/* Expérience 1 : Alternance Administrateur Systèmes & Réseaux */}
           <motion.div
             className="flex flex-col md:flex-row items-center bg-gray-100 dark:bg-zinc-800 rounded-xl p-6 shadow-lg"
             initial={{ opacity: 0, y: 50 }}
@@ -72,7 +72,7 @@ export default function ExperienceSection() {
 
             <div className="md:w-2/3 md:pl-8">
               <h3 className="text-2xl font-semibold mb-2 flex items-center text-gray-800 dark:text-gray-100">
-                <FaCloud className="mr-2 text-blue-600" /> Janvier 2026 - En cours : Stage Administrateur Systèmes & Réseaux — Open, France
+                <FaCloud className="mr-2 text-blue-600" /> Septembre 2026 - Août 2027 : Alternance Administrateur Systèmes & Réseaux — Open, France
               </h3>
 
               <ul className="list-disc pl-5 text-gray-700 dark:text-gray-300 space-y-1">

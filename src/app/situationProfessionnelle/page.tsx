@@ -36,7 +36,7 @@ export default function SituationProfessionnellePage() {
     {
       title: 'MCO Linux & standardisation',
       contexte:
-        "Stage chez Open — Assurer le maintien en conditions opérationnelles d’un parc Linux en standardisant les configurations et en renforçant la fiabilité des services du SI.",
+        "Alternance chez Open — Assurer le maintien en conditions opérationnelles d’un parc Linux en standardisant les configurations et en renforçant la fiabilité des services du SI.",
       description: [
         "Mise en place d’une baseline Linux (services systemd, configuration standard, bonnes pratiques).",
         "Gestion des mises à jour et patch management (maintenance planifiée, contrôle des versions).",
@@ -57,7 +57,7 @@ export default function SituationProfessionnellePage() {
     {
       title: 'Automatisation d’exploitation (Ansible & Python)',
       contexte:
-        "Stage chez Open — Réduire les tâches manuelles et fiabiliser les opérations récurrentes via l’automatisation et la standardisation.",
+        "Alternance chez Open — Réduire les tâches manuelles et fiabiliser les opérations récurrentes via l’automatisation et la standardisation.",
       description: [
         "Automatisation des mises à jour et actions récurrentes (playbooks Ansible).",
         "Déploiement de configurations et services via rôles (idempotence, variables, inventaires).",
@@ -78,7 +78,7 @@ export default function SituationProfessionnellePage() {
     {
       title: 'Supervision & observabilité (SI)',
       contexte:
-        "Stage chez Open — Mettre en place une visibilité fiable sur l’état des services du SI (disponibilité, performance, alertes) afin d’anticiper les incidents.",
+        "Alternance chez Open — Mettre en place une visibilité fiable sur l’état des services du SI (disponibilité, performance, alertes) afin d’anticiper les incidents.",
       description: [
         "Mise en place/optimisation des dashboards de supervision et indicateurs clés.",
         "Configuration d’alertes pertinentes (seuils, criticité, réduction du bruit).",
@@ -99,7 +99,7 @@ export default function SituationProfessionnellePage() {
     {
       title: 'Support N2/N3 & gestion des incidents',
       contexte:
-        "Stage chez Open — Contribuer au support et à l’exploitation du SI (incidents, demandes, améliorations) avec un traitement structuré et documenté.",
+        "Alternance chez Open — Contribuer au support et à l’exploitation du SI (incidents, demandes, améliorations) avec un traitement structuré et documenté.",
       description: [
         "Prise en charge de tickets : qualification, priorisation, diagnostic et résolution.",
         "Analyse de causes racines (RCA) et actions correctives/préventives.",
