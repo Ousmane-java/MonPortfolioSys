@@ -72,7 +72,7 @@ export default function ExperienceSection() {
 
             <div className="md:w-2/3 md:pl-8">
               <h3 className="text-2xl font-semibold mb-2 flex items-center text-gray-800 dark:text-gray-100">
-                <FaCloud className="mr-2 text-blue-600" /> Septembre 2026 - Août 2027 : Alternance Administrateur Systèmes & Réseaux — Open, France
+                <FaCloud className="mr-2 text-blue-600" /> Septembre 2025 - Août 2026 : Alternance Administrateur Systèmes & Réseaux — Open, France
               </h3>
 
               <ul className="list-disc pl-5 text-gray-700 dark:text-gray-300 space-y-1">
