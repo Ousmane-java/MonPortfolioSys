@@ -52,7 +52,7 @@ export default function Navbar() {
             {/* Logo / prompt */}
             <Link href="/#a-propos">
               <span className="font-mono text-sm font-semibold tracking-tight select-none" style={{ color: 'var(--accent)' }}>
-                ousmane@portfolio<span style={{ color: 'var(--text-3)' }}>:~$</span>
+                ousmane<span style={{ color: 'var(--text-3)' }}>@sys</span>
               </span>
             </Link>
 

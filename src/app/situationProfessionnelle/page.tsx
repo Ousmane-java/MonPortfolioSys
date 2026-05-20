@@ -562,7 +562,7 @@ export default function SituationProfessionnellePage() {
   };
 
   return (
-    <main className="min-h-screen bg-white dark:bg-zinc-900 pt-28 pb-16 px-4 flex flex-col">
+    <main className="min-h-screen pt-28 pb-16 px-4 flex flex-col">
       <motion.h1
         className="text-4xl md:text-5xl font-bold text-center text-blue-600 mb-4"
         initial={{ opacity: 0, y: -30 }}
@@ -580,7 +580,7 @@ export default function SituationProfessionnellePage() {
         {tasks.map((task, index) => (
           <motion.div
             key={index}
-            className="bg-gray-50 dark:bg-zinc-800 rounded-xl p-6 shadow-md border border-zinc-200 dark:border-zinc-700"
+            className="glass rounded-xl p-6 shadow-md"
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}

@@ -1671,9 +1671,9 @@ export default function DocsPage() {
   }
 
   return (
-    <div className="min-h-screen w-full bg-gray-50 dark:bg-zinc-950 text-gray-900 dark:text-gray-100">
+    <div className="min-h-screen w-full" style={{ color: 'var(--text-1)' }}>
       {/* Top bar */}
-      <div className="sticky top-0 z-50 w-full border-b border-gray-200/70 dark:border-zinc-800 bg-white/80 dark:bg-zinc-950/70 backdrop-blur">
+      <div className="sticky top-0 z-50 w-full" style={{ borderBottom: '1px solid var(--nav-border)', background: 'var(--nav-bg)', backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)' }}>
         <div className="px-4 md:px-6 py-3 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <button
@@ -1724,7 +1724,7 @@ export default function DocsPage() {
       <div className="w-full">
         <div className="grid grid-cols-1 md:grid-cols-[320px_minmax(0,1fr)_360px] gap-0">
           {/* LEFT SIDEBAR */}
-          <aside className="hidden md:flex flex-col border-r border-gray-200 dark:border-zinc-800 bg-white dark:bg-zinc-950">
+          <aside className="hidden md:flex flex-col" style={{ borderRight: '1px solid var(--card-border)', background: 'var(--card-bg)', backdropFilter: 'blur(14px)' }}>
             <div className="p-4">
               <div className="relative">
                 <Search className="w-4 h-4 text-gray-500 absolute left-3 top-1/2 -translate-y-1/2" />
@@ -1796,7 +1796,8 @@ export default function DocsPage() {
                 initial={{ x: -340, opacity: 0 }}
                 animate={{ x: 0, opacity: 1 }}
                 transition={{ duration: 0.2 }}
-                className="absolute left-0 top-0 bottom-0 w-[340px] bg-white dark:bg-zinc-950 border-r border-gray-200 dark:border-zinc-800"
+                className="absolute left-0 top-0 bottom-0 w-[340px] glass"
+                style={{ borderRight: '1px solid var(--card-border)' }}
               >
                 <div className="p-4 flex items-center justify-between border-b border-gray-200 dark:border-zinc-800">
                   <p className="font-semibold">Sommaire</p>
@@ -1857,7 +1858,7 @@ export default function DocsPage() {
           )}
 
           {/* CENTER CONTENT */}
-          <main className="bg-gray-50 dark:bg-zinc-950">
+          <main>
             <div className="px-4 md:px-10 py-8">
               <motion.div
                 key={activeDoc.id}
@@ -1866,7 +1867,7 @@ export default function DocsPage() {
                 transition={{ duration: 0.22 }}
                 className="max-w-5xl mx-auto"
               >
-                <div className="rounded-3xl border border-gray-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 shadow-sm overflow-hidden">
+                <div className="glass rounded-3xl shadow-sm overflow-hidden">
                   <div className="p-6 md:p-8 border-b border-gray-200 dark:border-zinc-800">
                     <div className="flex items-start justify-between gap-4">
                       <div>
