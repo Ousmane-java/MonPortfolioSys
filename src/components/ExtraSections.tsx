@@ -130,7 +130,7 @@ export default function ExtraSections() {
           Témoignages & Retours
         </h2>
 
-        <div className="overflow-hidden relative w-full">
+        <div className="overflow-hidden relative w-full" style={{ overflowX: 'clip' }}>
           <motion.div
             className="flex gap-6"
             initial={{ x: '0%' }}

@@ -27,7 +27,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body style={{ position: 'relative' }}>
         <NetworkBackground />
-        <div style={{ position: 'relative', zIndex: 10 }}>
+        <div style={{ position: 'relative', zIndex: 10, overflowX: 'hidden' }}>
           <Navbar />
           {children}
         </div>
