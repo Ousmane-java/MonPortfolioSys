@@ -35,7 +35,7 @@ export default function AProposPage() {
   const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' })
 
   return (
-    <main className="bg-white text-gray-800 pt-20">
+    <main className="pt-20" style={{ color: 'var(--text-1)' }}>
       {/* Section 1 : Introduction */}
       <Section customDelay={0}>
         <div className="max-w-4xl mx-auto text-center">
@@ -168,7 +168,7 @@ export default function AProposPage() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="text-lg leading-relaxed text-gray-700"
+            className="text-lg leading-relaxed" style={{ color: 'var(--text-2)' }}
           >
             En 2023, j'ai eu l'honneur d'être élu <strong>Président du CODI</strong> (Comité d'Organisation des Intégrations) à l'École Supérieure Polytechnique de Dakar. Ce comité crucial accompagne les nouveaux étudiants en informatique durant leurs premiers pas, en simplifiant leur intégration académique et administrative.
           </motion.p>
@@ -177,7 +177,7 @@ export default function AProposPage() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-lg leading-relaxed text-gray-700"
+            className="text-lg leading-relaxed" style={{ color: 'var(--text-2)' }}
           >
             Notre mission : créer du lien. Par des <strong>soirées cinéma</strong>, des <strong>tournois inter-classes</strong>, et des ateliers pratiques, nous avons brisé les barrières entre promotions. Chaque événement était pensé pour mixer les générations, permettant aux anciens de partager leur expérience et aux nouveaux de trouver leur place.
           </motion.p>
@@ -186,7 +186,7 @@ export default function AProposPage() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="text-lg leading-relaxed text-gray-700"
+            className="text-lg leading-relaxed" style={{ color: 'var(--text-2)' }}
           >
             Au-delà de l'animation, nous avons mis en place un <strong>système de parrainage</strong> et des permanences pour guider les étudiants dans les méandres administratifs. Résultat : une chute de 40% des requêtes redondantes au secrétariat et une meilleure cohésion départementale.
           </motion.p>
@@ -258,13 +258,14 @@ export default function AProposPage() {
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="bg-blue-50 p-8 rounded-xl shadow-lg border border-blue-100"
+            className="glass p-8 rounded-xl shadow-lg"
+            style={{ borderLeft: '3px solid var(--accent)' }}
           >
-            <h3 className="text-2xl font-bold mb-4 text-blue-800">Leadership forgé dans l'action</h3>
+            <h3 className="text-2xl font-bold mb-4" style={{ color: 'var(--accent)' }}>Leadership forgé dans l'action</h3>
             <p className="text-lg leading-relaxed text-gray-700 mb-4">
               Ce mandat a été mon accélérateur de croissance. Face aux <strong>directeurs d'école</strong>, j'ai appris à défendre des budgets avec des arguments percutants. Devant 300 étudiants, j'ai surmonté le trac pour <strong>porter une vision</strong>. Chaque crise gérée (annulation de sponsor, conflits entre promotions) a aiguisé mon <strong>calme stratégique</strong>.
             </p>
-            <p className="text-lg leading-relaxed text-gray-700">
+            <p className="text-lg leading-relaxed" style={{ color: 'var(--text-2)' }}>
               Le plus précieux ? L'art de <strong>prendre des décisions impopulaires mais justes</strong>. Quand nous avons dû reporter un événement pour cause de grève, les critiques fusèrent. Mais en expliquant notre processus décisionnel transparent, nous avons gagné en crédibilité. Aujourd'hui, ces compétences irriguent chaque aspect de ma vie professionnelle : anticiper les objections, convaincre par les faits, et transformer chaque échec en levier.
             </p>
           </motion.div>

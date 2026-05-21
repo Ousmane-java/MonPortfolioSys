@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import { FaLinkedin, FaGithub, FaTwitter } from 'react-icons/fa'
 import { Sun, Moon, Menu, X } from 'lucide-react'
@@ -20,6 +21,12 @@ export default function Navbar() {
   const [open, setOpen]   = useState(false)
   const [cvOpen, setCvOpen] = useState(false)
   const [dark, setDark]   = useState(false)
+  const router = useRouter()
+
+  const handleLogoClick = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+    if (window.location.pathname !== '/') router.push('/')
+  }
 
   useEffect(() => {
     setDark(document.documentElement.getAttribute('data-theme') === 'dark')
@@ -50,11 +57,11 @@ export default function Navbar() {
           <div className="flex items-center justify-between h-14">
 
             {/* Logo / prompt */}
-            <Link href="/#a-propos">
+            <button onClick={handleLogoClick} className="bg-transparent border-0 cursor-pointer p-0">
               <span className="font-mono text-sm font-semibold tracking-tight select-none" style={{ color: 'var(--accent)' }}>
                 ousmane<span style={{ color: 'var(--text-3)' }}>@sys</span>
               </span>
-            </Link>
+            </button>
 
             {/* Desktop nav */}
             <nav className="hidden md:flex items-center gap-0.5">
