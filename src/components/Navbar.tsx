@@ -35,6 +35,7 @@ export default function Navbar() {
   const toggleTheme = () => {
     const next = dark ? 'light' : 'dark'
     document.documentElement.setAttribute('data-theme', next)
+    document.documentElement.classList.toggle('dark', next === 'dark')
     localStorage.setItem('theme', next)
     setDark(!dark)
   }

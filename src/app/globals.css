@@ -3,6 +3,9 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Brancher dark: sur la classe .dark (+ data-theme pour nos CSS vars) */
+@variant dark (&:is(.dark, .dark *));
+
 /* ─── Design tokens ─── */
 :root {
   --bg:           #f0f4ff;
