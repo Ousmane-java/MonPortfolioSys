@@ -97,7 +97,7 @@ export default function SituationProfessionnellePage() {
       ],
     },
     {
-      title: 'Support N2/N3 & gestion des incidents',
+      title: 'Support N1/N2 & gestion des incidents',
       contexte:
         "Alternance chez Open — Contribuer au support et à l’exploitation du SI (incidents, demandes, améliorations) avec un traitement structuré et documenté.",
       description: [
@@ -130,7 +130,7 @@ export default function SituationProfessionnellePage() {
         "Diagnostic Linux : services systemd, logs journald, ressources (CPU/RAM/disque), droits/permissions.",
         "Analyse et résolution : identification de la cause, correction, validation, retour à l’état nominal.",
         "Rédaction de compte-rendu : actions effectuées, cause racine, recommandations de prévention.",
-        "Escalade structurée si nécessaire (N3) avec éléments techniques exploitables.",
+        "Escalade structurée si nécessaire (N2) avec éléments techniques exploitables.",
       ],
       environnement:
         'Linux, TCP/IP, DNS/DHCP, SSH, journalctl, ss/netstat, ping/traceroute, tcpdump',

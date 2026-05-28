@@ -11,14 +11,14 @@ const experiences = [
     role: 'Administrateur Systèmes & Réseaux',
     company: 'Open',
     location: 'France',
-    tags: ['Linux', 'Ansible', 'Supervision', 'N2/N3', 'SSH', 'Réseau', 'Runbooks'],
+    tags: ['Linux', 'Ansible', 'Supervision', 'N1/N2', 'SSH', 'Réseau', 'Runbooks'],
     missions: [
       'Industrialisation MCO Linux : baseline, hardening, patch management, conformité',
       'Exploitation avancée : systemd, optimisation CPU/RAM/IO, capacity planning',
       'Automatisation : playbooks Ansible, scripts Bash/Python, reporting',
       'Administration réseau : diagnostic L2/L3, DNS/DHCP, tcpdump, ACL',
       'Sécurisation & segmentation : règles pare-feu, durcissement SSH, contrôle des flux',
-      'Support N2/N3 : tickets, RCA, runbooks, amélioration continue',
+      'Support N1/N2 : tickets, RCA, runbooks, amélioration continue',
     ],
   },
   {

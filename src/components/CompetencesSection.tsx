@@ -65,7 +65,7 @@ const panels: Panel[] = [
     label: 'Support Informatique',
     color: '#f97316',
     skills: [
-      { name: 'Diagnostic N2/N3',           level: 4 },
+      { name: 'Diagnostic N1/N2',           level: 4 },
       { name: 'RCA (Root Cause Analysis)',  level: 4 },
       { name: 'GLPI / Ticketing ITSM',      level: 3 },
       { name: 'Jira',                        level: 3 },
