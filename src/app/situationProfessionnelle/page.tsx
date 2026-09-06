@@ -34,90 +34,110 @@ export default function SituationProfessionnellePage() {
     // Open / SI
     // -----------------------------
     {
-      title: 'MCO Linux & standardisation',
+      title: "Gestion du parc utilisateurs & Active Directory",
       contexte:
-        "Alternance chez Open — Assurer le maintien en conditions opérationnelles d’un parc Linux en standardisant les configurations et en renforçant la fiabilité des services du SI.",
+        "Alternance chez Open — Administration du parc informatique et gestion des comptes utilisateurs via Active Directory, de l’onboarding des nouveaux arrivants au support quotidien sur les accès et équipements.",
       description: [
-        "Mise en place d’une baseline Linux (services systemd, configuration standard, bonnes pratiques).",
-        "Gestion des mises à jour et patch management (maintenance planifiée, contrôle des versions).",
-        "Durcissement des accès (SSH hardening, gestion sudo, principes du moindre privilège).",
-        "Contrôles de conformité et corrections (permissions, services inutiles, sécurisation des configurations).",
-        "Rédaction et mise à jour de procédures d’exploitation (runbooks).",
+        "Création, modification et suppression de comptes utilisateurs dans Active Directory.",
+        "Attribution des droits d’accès selon les profils (groupes AD, unités organisationnelles).",
+        "Gestion du parc postes et équipements : inventaire, configuration initiale, affectation.",
+        "Accompagnement des utilisateurs lors de l’onboarding (accès, postes, outils).",
+        "Suivi et traitement des demandes d’accès via l’outil de ticketing.",
       ],
-      environnement: 'Linux (Ubuntu/Debian), systemd, SSH, sudo, Bash',
+      environnement: 'Windows Server, Active Directory, DNS, DHCP, ITSM',
       moyens:
-        'Accès serveurs, dépôt Git interne, procédures SI, ticketing interne, environnement de test',
+        "Console Active Directory, outils d’administration, ticketing interne, documentation SI",
       competences: [
-        'C1.1 Administrer l’infrastructure informatique',
-        'C1.6 Maintenir en conditions opérationnelles l’infrastructure',
-        'C3.4 Gérer la sécurité des accès',
-        'C4.2 Documenter techniquement les procédures internes',
-      ],
-    },
-    {
-      title: 'Automatisation d’exploitation (Ansible & Python)',
-      contexte:
-        "Alternance chez Open — Réduire les tâches manuelles et fiabiliser les opérations récurrentes via l’automatisation et la standardisation.",
-      description: [
-        "Automatisation des mises à jour et actions récurrentes (playbooks Ansible).",
-        "Déploiement de configurations et services via rôles (idempotence, variables, inventaires).",
-        "Scripting Python pour des contrôles (vérifications, collecte d’informations, reporting).",
-        "Gestion sécurisée des secrets et bonnes pratiques d’exploitation (vault/variables sensibles).",
-        "Traçabilité des exécutions et amélioration continue des playbooks.",
-      ],
-      environnement: 'Ansible, Python, Bash, SSH, Git',
-      moyens:
-        'Serveurs Linux, inventaires, dépôts Git, environnement de staging, documentation interne',
-      competences: [
-        'C2.4 Automatiser les procédures d’exploitation',
-        'C1.6 Maintenir les systèmes en conditions opérationnelles',
-        'C2.2 Assurer l’évolution des infrastructures',
-        'C4.2 Rédiger une documentation technique',
-      ],
-    },
-    {
-      title: 'Supervision & observabilité (SI)',
-      contexte:
-        "Alternance chez Open — Mettre en place une visibilité fiable sur l’état des services du SI (disponibilité, performance, alertes) afin d’anticiper les incidents.",
-      description: [
-        "Mise en place/optimisation des dashboards de supervision et indicateurs clés.",
-        "Configuration d’alertes pertinentes (seuils, criticité, réduction du bruit).",
-        "Analyse d’incidents à partir des métriques et logs (diagnostic, actions correctives).",
-        "Suivi de la disponibilité et des tendances (capacité, charges, dérives).",
-        "Formalisation de runbooks et procédures d’astreinte/traitement.",
-      ],
-      environnement: 'Prometheus, Grafana, logs Linux (journald), outils de supervision',
-      moyens:
-        'Accès aux plateformes de monitoring, référentiels d’alertes, incidents/tickets, documentation interne',
-      competences: [
-        'C2.6 Superviser le SI et les applications',
-        'C1.5 Gérer les alertes et les correctifs',
-        'C1.6 Maintenir en conditions opérationnelles',
+        "C1.1 Administrer l’infrastructure informatique",
+        "C3.4 Gérer la sécurité des accès",
+        "C2.7 Organiser l’assistance technique",
         'C4.1 Communiquer avec les acteurs internes',
       ],
     },
     {
-      title: 'Support N1/N2 & gestion des incidents',
+      title: "Support technique N1/N2 & gestion des incidents",
       contexte:
-        "Alternance chez Open — Contribuer au support et à l’exploitation du SI (incidents, demandes, améliorations) avec un traitement structuré et documenté.",
+        "Alternance chez Open — Prise en charge des incidents utilisateurs et systèmes dans un environnement de production, avec diagnostic, résolution et escalade structurée vers les équipes N3.",
       description: [
-        "Prise en charge de tickets : qualification, priorisation, diagnostic et résolution.",
-        "Analyse de causes racines (RCA) et actions correctives/préventives.",
-        "Standardisation des procédures de résolution (documentation, checklists, runbooks).",
-        "Amélioration continue : propositions d’optimisation et réduction des récurrences.",
-        "Communication claire avec les équipes (suivi, comptes-rendus, escalade).",
+        "Réception et qualification des tickets incidents via l’outil ITSM.",
+        "Analyse des logs systèmes et applicatifs pour identifier la cause des incidents.",
+        "Diagnostic et résolution des incidents N1/N2 (postes, accès, services).",
+        "Éscalade structurée vers les équipes N3 avec les éléments techniques nécessaires.",
+        "Suivi et clôture des tickets avec documentation des actions menées.",
       ],
-      environnement: 'Linux, ticketing (ITSM), documentation interne, Git',
+      environnement: 'Linux, Windows, ITSM / ticketing, journald, logs systèmes',
       moyens:
-        'Outil de ticketing, accès serveurs/applicatifs, base de connaissances interne, procédures SI',
+        "Outil de ticketing, accès serveurs, base de connaissances interne, procédures d’exploitation",
       competences: [
-        'C2.7 Organiser l’assistance technique',
-        'C1.6 Maintenir en conditions opérationnelles',
+        "C2.7 Organiser l’assistance technique",
+        "C1.6 Maintenir en conditions opérationnelles",
+        "C1.5 Gérer les alertes et les correctifs",
         'C4.1 Communiquer avec les acteurs internes',
-        'C4.2 Documenter techniquement les procédures internes',
       ],
     },
-
+    {
+      title: "Administration et MCO des serveurs Linux & Windows Server",
+      contexte:
+        "Alternance chez Open — Contribution au maintien en conditions opérationnelles des serveurs Linux (Ubuntu/CentOS) et Windows Server dans un environnement de production.",
+      description: [
+        "Vérification régulière de l’état des services et des serveurs (santé, ressources, logs).",
+        "Redémarrage de services et interventions de premier niveau en cas d’incident.",
+        "Application des mises à jour système planifiées sous supervision.",
+        "Analyse des logs systèmes pour identifier des anomalies.",
+        "Remontée des incidents vers les équipes N3 avec les éléments techniques.",
+      ],
+      environnement: 'Linux (Ubuntu, CentOS), Windows Server, systemd, journald, PowerShell',
+      moyens:
+        "Accès SSH, console Windows, procédures d’exploitation, ticketing, documentation interne",
+      competences: [
+        "C1.1 Administrer l’infrastructure informatique",
+        "C1.6 Maintenir en conditions opérationnelles",
+        "C1.5 Gérer les alertes et les correctifs",
+        "C4.2 Documenter techniquement les procédures internes",
+      ],
+    },
+    {
+      title: "Supervision des infrastructures avec Centreon",
+      contexte:
+        "Alternance chez Open — Participation à la supervision des services et infrastructures via Centreon, avec gestion des alertes et mise en œuvre d’actions correctives de premier niveau.",
+      description: [
+        "Consultation et traitement des alertes sur la plateforme Centreon.",
+        "Analyse des incidents remontés par la supervision (état des services, disponibilité).",
+        "Mise en œuvre d’actions correctives N1 (redémarrage de service, vérification de connectivité).",
+        "Éscalade vers les équipes N3 avec les éléments de contexte.",
+        "Suivi de la disponibilité des services et remontée des anomalies récurrentes.",
+      ],
+      environnement: 'Centreon, Linux, Windows Server, SNMP, ITSM',
+      moyens:
+        "Interface Centreon, accès serveurs, ticketing, documentation supervision",
+      competences: [
+        "C2.6 Superviser le SI et les applications",
+        "C1.5 Gérer les alertes et les correctifs",
+        "C1.6 Maintenir en conditions opérationnelles",
+        'C4.1 Communiquer avec les acteurs internes',
+      ],
+    },
+    {
+      title: "Automatisation Ansible & exploitation VMware ESXi / Docker",
+      contexte:
+        "Alternance chez Open — Participation aux tâches d’automatisation et contribution à l’exploitation des environnements virtualisés et conteneurisés.",
+      description: [
+        "Contribution à l’écriture et l’exécution de playbooks Ansible (mises à jour, déploiement de configurations).",
+        "Participation à la gestion des machines virtuelles sous VMware ESXi (démarrage, redémarrage, suivi).",
+        "Déploiement et gestion de conteneurs Docker dans les environnements de test et d’intégration.",
+        "Application des procédures d’exploitation documentées.",
+        "Remontée des anomalies et suivi des exécutions.",
+      ],
+      environnement: 'Ansible, VMware ESXi, Docker, Linux, Bash',
+      moyens:
+        "Accès SSH, console VMware, outils CLI Docker, procédures internes, environnements de test",
+      competences: [
+        "C2.4 Automatiser les procédures d’exploitation",
+        "C1.1 Administrer l’infrastructure informatique",
+        "C1.6 Maintenir en conditions opérationnelles",
+        "C4.2 Documenter techniquement les procédures internes",
+      ],
+    },
     // -----------------------------
     // Support Systèmes / Réseaux
     // -----------------------------
