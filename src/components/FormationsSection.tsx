@@ -28,7 +28,7 @@ const formations = [
     color: '#818cf8',
     period: '2021',
     diploma: 'Baccalauréat Scientifique (S2)',
-    school: 'Lycée des Parcelles Assainies — Dakar, Sénégal',
+    school: 'Lycée Sergent Malamine Camara — Dakar, Sénégal',
     detail: 'Obtenu en 7 ans au lieu des 13 habituels, après une entrée directe en CM2 en 2014.',
   },
 ]
