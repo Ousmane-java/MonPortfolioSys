@@ -15,12 +15,12 @@ const projects = [
     cta: 'Voir InfraMap →',
   },
   {
-    title: 'Kyosk',
+    title: 'Seahawks Nester & Infrastructure MSPR',
     description:
-      "Kyosk est la première application mobile dédiée à la presse sénégalaise et africaine. Accédez instantanément à vos journaux, magazines et milliers de livres et ebooks directement depuis votre iPhone, où que vous soyez au Sénégal ou dans la diaspora.",
-    link: 'https://www.kyosk.sn',
-    image: '/projects/kyosk.jpg',
-    cta: 'Voir Kyosk →',
+      "Projet majeur réalisé dans le cadre de la MSPR TPTE512. Infrastructure complète conçue pour NFL IT : infrastructure virtuelle sous ESXi, services critiques (DHCP, DNS, Ticketing), cluster haute disponibilité, firewalls pfSense, tunnel VPN IPsec, supervision Zabbix, télémaintenance SSH et gestion de versions avec GitLab CE.",
+    link: 'https://github.com/Ousmane-java/MSPR1-EPSI',
+    image: '/projects/seahawks.jpg',
+    cta: 'Voir sur GitHub →',
   },
 ]
 

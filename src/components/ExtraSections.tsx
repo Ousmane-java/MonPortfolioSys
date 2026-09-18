@@ -1,61 +1,10 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Users, Workflow, Mail } from 'lucide-react'
+import { Workflow, Mail } from 'lucide-react'
 import Image from 'next/image'
-import { useMemo, useState } from 'react'
-
-const testimonials = [
-  {
-    text: "Très solide en exploitation Linux : MCO, patching et durcissement SSH, avec une approche orientée stabilité et sécurité.",
-    author: "Thomas Lefèvre — Manager Systèmes & Réseaux (Open, France)",
-  },
-  {
-    text: "Ousmane structure le monitoring de façon propre : métriques, alerting et dashboards utiles, avec une vraie réduction du bruit d’alertes.",
-    author: "Camille Morel — Ingénieure Observabilité (Open, France)",
-  },
-  {
-    text: "Excellent réflexe incident : diagnostic rapide, collecte de preuves (logs), RCA claire et runbooks actionnables.",
-    author: "Nicolas Garnier — Responsable Exploitation (Open, France)",
-  },
-  {
-    text: "Automatisation fiable : playbooks Ansible propres, idempotents, avec une logique d’industrialisation et de standardisation très pro.",
-    author: "Julie Bernard — Ingénieure DevOps (InnovQube, France)",
-  },
-  {
-    text: "Très bon niveau réseau pour un profil systèmes : DNS/DHCP, routage de base, analyse trafic et dépannage structuré.",
-    author: "Maxime Robert — Manager Infrastructure (InnovQube, France)",
-  },
-  {
-    text: "Documentation de qualité : procédures claires, checklists de MEP, et bonnes pratiques transmises à l’équipe.",
-    author: "Sophie Laurent — Cheffe de projet IT (InnovQube, France)",
-  },
-  {
-    text: "Le fait de gérer InfraMap en conditions réelles (déploiement, logs Docker, évolutions) démontre une rigueur rare et un vrai sens produit.",
-    author: "Pierre Dubois — Enseignant Systèmes & Réseaux (EPSI Lyon)",
-  },
-  {
-    text: "Profil autonome et orienté amélioration continue : priorisation, communication claire et capacité à livrer des changements sûrs.",
-    author: "Élodie Richard — Enseignante / Référente alternance (EPSI Lyon)",
-  },
-]
 
 export default function ExtraSections() {
-  const [isPaused, setIsPaused] = useState(false)
-
-  const marqueeAnimation = useMemo(
-    () => ({
-      x: isPaused ? undefined : '-50%',
-      transition: isPaused
-        ? undefined
-        : { repeat: Infinity, duration: 40, ease: 'linear' as const },
-    }),
-    [isPaused]
-  )
-
-  // On duplique pour créer une boucle fluide
-  const marqueeItems = useMemo(() => [...testimonials, ...testimonials], [])
-
   return (
     <section className="w-full px-6 py-20 space-y-32">
       {/* Processus de travail */}
@@ -115,49 +64,6 @@ export default function ExtraSections() {
             className="w-full h-auto rounded-xl shadow-lg"
           />
         </div>
-      </motion.div>
-
-      {/* Témoignages */}
-      <motion.div
-        initial={{ opacity: 0, y: 50 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
-        viewport={{ once: true }}
-        className="max-w-6xl mx-auto text-center"
-      >
-        <h2 className="text-3xl font-bold flex justify-center items-center gap-2 mb-10" style={{ color: 'var(--text-1)' }}>
-          <Users className="text-green-600 w-8 h-8" />
-          Témoignages & Retours
-        </h2>
-
-        <div className="overflow-hidden relative w-full" style={{ overflowX: 'clip' }}>
-          <motion.div
-            className="flex gap-6"
-            initial={{ x: '0%' }}
-            animate={marqueeAnimation}
-            style={{ width: '200%' }}
-          >
-            {marqueeItems.map((testimonial, index) => (
-              <motion.div
-                key={index}
-                onMouseEnter={() => setIsPaused(true)}
-                onMouseLeave={() => setIsPaused(false)}
-                className="glass p-6 rounded-xl shadow-md min-w-[320px] max-w-sm flex-shrink-0 text-left"
-              >
-                <p className="italic" style={{ color: 'var(--text-2)' }}>
-                  “{testimonial.text}”
-                </p>
-                <p className="text-sm mt-4" style={{ color: 'var(--text-3)' }}>
-                  — {testimonial.author}
-                </p>
-              </motion.div>
-            ))}
-          </motion.div>
-        </div>
-
-        <p className="mt-4 text-sm text-gray-500 dark:text-gray-400">
-          Astuce : survolez un témoignage pour mettre le défilement en pause.
-        </p>
       </motion.div>
 
       {/* Contact */}
