@@ -26,7 +26,7 @@ export default function SituationProSection() {
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
         >
-          Ma situation professionnelle
+          Mes réalisations techniques
         </motion.h2>
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
@@ -36,7 +36,7 @@ export default function SituationProSection() {
         >
           <Link href="/situationProfessionnelle">
             <button className="px-8 py-3 bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-indigo-500 hover:to-blue-600 text-white rounded-full text-lg font-semibold transition-all duration-300 transform hover:scale-105 shadow-2xl">
-              Voir ma situation Pro
+              Voir mes réalisations
             </button>
           </Link>
         </motion.div>

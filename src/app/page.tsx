@@ -3,7 +3,7 @@
 import AboutPreview from '@/components/AboutPreview'
 import ExperienceSection from '@/components/ExperienceSection'
 import CompetencesSection from '@/components/CompetencesSection'
-import CompetenceMetricsSection from '@/components/CompetenceMetricsSection'
+import FormationsSection from '@/components/FormationsSection'
 import ProjectsSection from '@/components/ProjectsSection'
 import SituationProSection from '@/components/SituationProSection'
 import ExtraSections from '@/components/ExtraSections'
@@ -21,8 +21,8 @@ export default function Home() {
       <section id="competences">
         <CompetencesSection />
       </section>
-      <section id="mes-competences">
-        <CompetenceMetricsSection />
+      <section id="formations">
+        <FormationsSection />
       </section>
       <section id="projets">
         <ProjectsSection />
