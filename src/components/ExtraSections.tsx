@@ -174,7 +174,7 @@ export default function ExtraSections() {
         </h2>
 
         <p className="text-lg mb-6" style={{ color: 'var(--text-2)' }}>
-          Admis en Master Cybersecurity, Cloud, System and Networks, je recherche une alternance pour la rentrée 2026
+          Admis en Master Systèmes, Réseaux &amp; Cloud Computing, je recherche une alternance pour la rentrée 2026
           (Ingénieur / Administrateur / Technicien Systèmes & Réseaux, orientation Linux).
           N&apos;hésitez pas à me contacter pour toute opportunité.
         </p>

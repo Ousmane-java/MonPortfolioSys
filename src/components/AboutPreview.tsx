@@ -6,7 +6,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 
-const fullText = `Chaque infrastructure est une toile, et moi, j'en suis le bâtisseur. Je suis Ousmane Drame, étudiant en Cybersecurity, Cloud, System and Networks. Passionné par la sécurité, la fiabilité des systèmes et l'automatisation, j'aime concevoir des environnements stables et bien pensés. Mon objectif : transformer la complexité en solutions simples et évolutives, et devenir Ingénieur Systèmes Linux. Si, comme moi, vous pensez qu'un bon système se ressent dans sa fluidité, alors vous êtes au bon endroit. Bienvenue dans mon univers !`
+const fullText = `Chaque infrastructure est une toile, et moi, j'en suis le bâtisseur. Je suis Ousmane Drame, étudiant en Master Systèmes, Réseaux & Cloud Computing. Passionné par le support technique, l'administration des systèmes et l'automatisation, j'aime diagnostiquer, dépanner et maintenir des environnements informatiques stables et fiables. Mon objectif : allier rigueur de terrain et vision d'ingénieur pour évoluer vers un poste d'Ingénieur Systèmes Linux. Si, comme moi, vous pensez qu'un bon système se ressent dans sa fluidité, alors vous êtes au bon endroit. Bienvenue dans mon univers !`
 
 export default function AboutPreview() {
   const [displayed, setDisplayed] = useState('')
@@ -79,7 +79,7 @@ export default function AboutPreview() {
             Ousmane Drame
           </h1>
           <p className="font-mono text-sm mb-5" style={{ color: 'var(--accent)' }}>
-            Cybersecurity · Cloud · System &amp; Networks
+            Systèmes · Réseaux · Cloud Computing
           </p>
 
           {/* Skill badges */}
@@ -88,7 +88,7 @@ export default function AboutPreview() {
               className="inline-flex items-center rounded-full px-3 py-1 text-xs font-medium"
               style={{ background: 'var(--accent-muted)', color: 'var(--text-2)' }}
             >
-              Systems &amp; Information Security Engineering
+              Administration Systèmes, Réseaux &amp; Support IT
             </span>
             <Link
               href="https://inframap.io/"
