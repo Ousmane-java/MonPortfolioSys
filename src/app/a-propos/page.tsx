@@ -2,29 +2,151 @@
 
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import Image from 'next/image'
-import { FaArrowUp, FaChevronLeft, FaChevronRight } from 'react-icons/fa'
-import { Section } from '@/components/Section'
+import { FaArrowUp } from 'react-icons/fa'
 import Footer from '@/components/Footer'
+
+type GraphNode = {
+  id: string
+  kind: 'trunk' | 'branch'
+  tag: string
+  period: string
+  title: string
+  place: string
+  text: string
+  color: string
+  branchFrom?: string
+  branchTo?: string
+}
+
+const nodes: GraphNode[] = [
+  {
+    id: 'racine',
+    kind: 'trunk',
+    tag: 'origin',
+    period: '2012 — 2014',
+    title: 'Racine',
+    place: 'Dakar, Sénégal',
+    text: "Avant 2014, je n'avais jamais mis les pieds à l'école. Attiré par la radio et les documentaires, j'apprends seul — grammaire, conjugaison — jusqu'à intégrer directement le CM2.",
+    color: '#818cf8',
+  },
+  {
+    id: 'bac',
+    kind: 'trunk',
+    tag: 'bac',
+    period: '2021',
+    title: 'Baccalauréat Scientifique (S2)',
+    place: 'Lycée Sergent Malamine Camara — Dakar',
+    text: "Obtenu après un parcours scolaire compressé (7 ans au lieu de 13). Spécialités : mathématiques, sciences physiques, sciences de la vie et de la terre (SVT) — les bases logiques qui mèneront à l'informatique.",
+    color: '#f59e0b',
+  },
+  {
+    id: 'licence',
+    kind: 'trunk',
+    tag: 'licence',
+    period: '2021 — 2024',
+    title: 'Licence Informatique',
+    place: 'École Supérieure Polytechnique — Dakar',
+    text: 'Algorithmique, programmation, bases de données : les fondamentaux techniques, et le goût de structurer des problèmes concrets.',
+    color: '#00d4ff',
+  },
+  {
+    id: 'codi',
+    kind: 'branch',
+    tag: 'leadership',
+    period: '2023',
+    title: 'Présidence du CODI',
+    place: 'ESP Dakar',
+    text: "Élu à la tête du comité d'intégration des nouveaux étudiants : gestion de budget, animation de 300+ étudiants, décisions impopulaires assumées. Une rigueur qui infuse encore mon approche technique aujourd'hui.",
+    color: '#f97316',
+    branchFrom: 'Licence Informatique',
+    branchTo: 'Bachelor ASR & BD',
+  },
+  {
+    id: 'bachelor',
+    kind: 'trunk',
+    tag: 'pivot',
+    period: '2024 — 2026',
+    title: 'Bachelor Administrateur Systèmes, Réseaux et Bases de Données',
+    place: 'EPSI — Lyon',
+    text: 'Le vrai virage vers les systèmes et réseaux : administration Windows/Linux, virtualisation, sécurité. Les projets MSPR (infrastructure ESXi, pfSense, supervision Zabbix) posent les bases du métier.',
+    color: '#00ff88',
+  },
+  {
+    id: 'stage',
+    kind: 'trunk',
+    tag: 'terrain',
+    period: '2025',
+    title: 'Stage Administrateur Systèmes Linux & Support',
+    place: 'InnovQube — Lyon',
+    text: "Première immersion en production : administration Linux N1, support informatique, diagnostic d'incidents. La théorie rencontre le terrain.",
+    color: '#00d4ff',
+  },
+  {
+    id: 'open',
+    kind: 'trunk',
+    tag: 'exploitation',
+    period: '2025 — 2026 · en cours',
+    title: 'Alternance Technicien Support Systèmes & Réseaux',
+    place: 'Open — Paris',
+    text: "Support N1/N2, Active Directory, supervision Centreon, automatisation Ansible. Le poste qui structure aujourd'hui mon quotidien technique.",
+    color: '#818cf8',
+  },
+  {
+    id: 'inframap',
+    kind: 'branch',
+    tag: 'produit',
+    period: '2026',
+    title: 'InfraMap',
+    place: 'Projet personnel',
+    text: "En parallèle, je lance InfraMap, un SaaS de gestion de parc serveurs. Exploiter mes propres serveurs en production m'apprend une rigueur qu'aucun cours ne donne.",
+    color: '#f97316',
+    branchFrom: 'Alternance chez Open',
+    branchTo: 'Ambition',
+  },
+  {
+    id: 'master',
+    kind: 'trunk',
+    tag: 'suite',
+    period: '2026 — 2028',
+    title: 'Master Systèmes, Réseaux & Cloud Computing',
+    place: 'ESGI — Paris',
+    text: 'La suite logique : approfondir le cloud et les architectures à grande échelle, en alternance, pour continuer à apprendre sur le terrain.',
+    color: '#00ff88',
+  },
+  {
+    id: 'ambition',
+    kind: 'trunk',
+    tag: 'cap',
+    period: 'Objectif',
+    title: 'Ambition',
+    place: 'Ingénieur / Architecte Systèmes, Réseaux & Cloud',
+    text: 'Piloter des infrastructures critiques dans un grand groupe, puis revenir au Sénégal fonder ma propre entreprise et contribuer à l’économie numérique africaine.',
+    color: '#f59e0b',
+  },
+]
+
+function BranchConnector({ color }: { color: string }) {
+  return (
+    <svg
+      className="hidden md:block absolute -left-8 top-7 pointer-events-none"
+      width="32"
+      height="32"
+      viewBox="0 0 32 32"
+      fill="none"
+    >
+      <path
+        d="M0 0 C 20 0, 20 16, 32 16"
+        stroke={color}
+        strokeWidth="1.5"
+        strokeDasharray="3 3"
+        fill="none"
+      />
+    </svg>
+  )
+}
 
 export default function AProposPage() {
   const [showTopBtn, setShowTopBtn] = useState(false)
-  const [currentSlide, setCurrentSlide] = useState(0)
-
-  // Tableau des images du slider CODI
-  const codiImages = [
-    '/codi-event1.jpg',
-    '/codi-event2.jpg'
-  ]
-
-  // Fonctions pour le slider
-  const nextSlide = () => {
-    setCurrentSlide((prev) => (prev === codiImages.length - 1 ? 0 : prev + 1))
-  }
-
-  const prevSlide = () => {
-    setCurrentSlide((prev) => (prev === 0 ? codiImages.length - 1 : prev - 1))
-  }
 
   useEffect(() => {
     const handleScroll = () => setShowTopBtn(window.scrollY > 300)
@@ -35,283 +157,130 @@ export default function AProposPage() {
   const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' })
 
   return (
-    <main className="pt-20" style={{ color: 'var(--text-1)' }}>
-      {/* Section 1 : Introduction */}
-      <Section customDelay={0}>
-        <div className="max-w-4xl mx-auto text-center">
-          <h1 className="text-4xl font-bold mb-6">Mon histoire commence ici</h1>
-          <p className="text-lg leading-relaxed mb-4">
-            Passionné par l'administration des systèmes et réseaux, je me suis lancé dans la tech pour relever des défis numériques et automatiser des tâches complexes.
-          </p>
-          <p className="text-lg leading-relaxed">
-            Chaque défi est une occasion d'apprendre et d'innover. C'est dans cet esprit que mon aventure a débuté.
-          </p>
-        </div>
-      </Section>
+    <main className="pt-28 pb-16 px-4" style={{ color: 'var(--text-1)' }}>
+      {/* Intro */}
+      <motion.div
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        className="max-w-3xl mx-auto text-center mb-16"
+      >
+        <span className="font-mono text-xs" style={{ color: 'var(--accent)' }}>
+          // graph.parcours
+        </span>
+        <h1 className="text-3xl md:text-4xl font-bold mt-2 mb-4" style={{ color: 'var(--text-1)' }}>
+          Mon parcours est un réseau
+        </h1>
+        <p className="text-base md:text-lg" style={{ color: 'var(--text-2)' }}>
+          Chaque nœud est une étape, chaque connexion une compétence ou une leçon qui mène à la suivante.
+          Deux expériences — le CODI et InfraMap — se sont greffées en cours de route avant de rejoindre le tronc principal.
+        </p>
+      </motion.div>
 
-      {/* Image de passion */}
-      <Section customDelay={0.2} className="flex justify-center">
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1 }}
-          className="w-full max-w-5xl"
-        >
-          <Image
-            src="/passion-horizontal.jpg"
-            alt="Ma passion pour la tech"
-            width={1200}
-            height={600}
-            className="rounded-lg shadow-2xl object-cover"
-            priority
-          />
-        </motion.div>
-      </Section>
+      {/* Graph */}
+      <div className="max-w-3xl mx-auto relative">
+        <div
+          className="absolute left-5 top-0 bottom-0 w-px hidden md:block"
+          style={{ background: 'var(--card-border)' }}
+        />
 
-      {/* Parcours académique */}
-      <Section customDelay={0.4}>
-        <div className="max-w-4xl mx-auto space-y-8 text-gray-700">
-          {[
-            `Le soir du 3 juillet 2021, je vivais l'un de mes plus grands moments en décrochant mon baccalauréat scientifique (S2) au Sénégal, terre de la « teranga ».`,
-            `Avant 2014, je n'avais jamais fréquenté l'école. En 2012, attiré par la radio et les documentaires, j'ai su que je devais apprendre. Malgré les réticences de certains parents sénégalais, j'ai persisté et commencé à m'auto-former en grammaire et conjugaison.`,
-            `En 2014, grâce à ma détermination, j'ai intégré directement la classe de CM2. Après sept années d'études intenses, j'ai obtenu mon bac en 2021, soit en 7 ans au lieu des 13 habituels, témoignant de ma motivation et de mon ambition.`,
-            `Après la 6e au Lycée des Parcelles Assainies (U14), j'ai sauté la 5e grâce à une procédure administrative réussie, soutenue par mes professeurs et un test. Chaque étape a renforcé ma capacité à relever des défis et à persévérer.`
-          ].map((text, i) => (
-            <motion.p
-              key={i}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: i * 0.2 }}
-              className="text-lg leading-relaxed"
-            >
-              {text}
-            </motion.p>
-          ))}
-        </div>
-      </Section>
+        <div className="space-y-6">
+          {nodes.map((node, i) => {
+            if (node.kind === 'branch') {
+              return (
+                <motion.div
+                  key={node.id}
+                  initial={{ opacity: 0, x: 24 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.45 }}
+                  className="relative md:pl-28"
+                >
+                  <BranchConnector color={node.color} />
 
-      {/* Image scolaire */}
-      <Section customDelay={0.6} className="flex justify-center">
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1 }}
-          className="w-full max-w-5xl"
-        >
-          <Image
-            src="/schooling.jpg"
-            alt="Mon parcours scolaire"
-            width={1200}
-            height={600}
-            className="rounded-lg shadow-2xl object-cover"
-          />
-        </motion.div>
-      </Section>
+                  <div
+                    className="glass rounded-xl p-5"
+                    style={{ border: `1px dashed ${node.color}70` }}
+                  >
+                    <div className="flex flex-wrap items-center gap-3 mb-2">
+                      <span
+                        className="font-mono text-xs font-bold px-2 py-0.5 rounded"
+                        style={{ background: `${node.color}18`, color: node.color }}
+                      >
+                        [branche · {node.tag}]
+                      </span>
+                      <span className="font-mono text-xs" style={{ color: 'var(--text-3)' }}>
+                        {node.period}
+                      </span>
+                    </div>
 
-      {/* Histoire technique */}
-      <Section customDelay={0.8}>
-        <div className="max-w-4xl mx-auto">
-          <h2 className="text-3xl font-bold mb-4">Chaque ligne de code raconte une histoire</h2>
-          <p className="text-lg leading-relaxed mb-4">
-            Que ce soit un ping ou un déploiement automatisé, chaque commande révèle un défi technique et une solution ingénieuse.
-          </p>
-          <p className="text-lg leading-relaxed">
-            J'ai appris à interpréter les flux réseau, diagnostiquer les erreurs et transformer ces données en infrastructures fiables.
-          </p>
-        </div>
-      </Section>
+                    <p className="font-mono text-xs mb-2" style={{ color: node.color }}>
+                      ↳ ramifiée depuis : {node.branchFrom}
+                    </p>
 
-      {/* Ambitions futures */}
-      <Section customDelay={1.0}>
-        <div className="max-w-4xl mx-auto space-y-6 text-gray-700">
-          {[
-            `Je souhaite devenir <strong>architecte systèmes, réseaux et cloud</strong> au sein d'un grand groupe pour acquérir une expertise avancée et piloter des infrastructures critiques.`,
-            `Cette expérience me préparera à revenir au Sénégal et en Afrique pour <strong>fonder ma propre entreprise</strong>, promouvoir l'innovation locale et créer des opportunités économiques.`,
-            `Mon objectif est de concevoir des architectures résilientes et évolutives qui stimuleront l'économie numérique africaine et inspireront la prochaine génération d'ingénieurs.`
-          ].map((text, i) => (
-            <motion.p
-              key={i}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: i * 0.2 }}
-              className="text-lg leading-relaxed"
-              dangerouslySetInnerHTML={{ __html: text }}
-            />
-          ))}
-        </div>
-      </Section>
+                    <h3 className="text-base font-semibold mb-0.5" style={{ color: 'var(--text-1)' }}>
+                      {node.title}
+                    </h3>
+                    <p className="text-sm font-medium mb-3" style={{ color: 'var(--accent)' }}>
+                      {node.place}
+                    </p>
 
-      {/* Image architecte */}
-      <Section customDelay={1.2} className="flex justify-center">
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1 }}
-          className="w-full max-w-5xl"
-        >
-          <Image
-            src="/architecture.jpg"
-            alt="Architecte systèmes et réseaux"
-            width={1200}
-            height={600}
-            className="rounded-lg shadow-2xl object-cover"
-          />
-        </motion.div>
-      </Section>
+                    <p className="text-sm mb-3" style={{ color: 'var(--text-2)' }}>
+                      {node.text}
+                    </p>
 
-      {/* Présidence du CODI */}
-      <Section customDelay={1.4}>
-        <div className="max-w-4xl mx-auto space-y-6">
-          <h2 className="text-3xl font-bold mb-6">Présidence du CODI : Une année transformative</h2>
-          
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-lg leading-relaxed" style={{ color: 'var(--text-2)' }}
-          >
-            En 2023, j'ai eu l'honneur d'être élu <strong>Président du CODI</strong> (Comité d'Organisation des Intégrations) à l'École Supérieure Polytechnique de Dakar. Ce comité crucial accompagne les nouveaux étudiants en informatique durant leurs premiers pas, en simplifiant leur intégration académique et administrative.
-          </motion.p>
+                    <p className="font-mono text-xs" style={{ color: node.color }}>
+                      → rejoint : {node.branchTo}
+                    </p>
+                  </div>
+                </motion.div>
+              )
+            }
 
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-lg leading-relaxed" style={{ color: 'var(--text-2)' }}
-          >
-            Notre mission : créer du lien. Par des <strong>soirées cinéma</strong>, des <strong>tournois inter-classes</strong>, et des ateliers pratiques, nous avons brisé les barrières entre promotions. Chaque événement était pensé pour mixer les générations, permettant aux anciens de partager leur expérience et aux nouveaux de trouver leur place.
-          </motion.p>
-
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            className="text-lg leading-relaxed" style={{ color: 'var(--text-2)' }}
-          >
-            Au-delà de l'animation, nous avons mis en place un <strong>système de parrainage</strong> et des permanences pour guider les étudiants dans les méandres administratifs. Résultat : une chute de 40% des requêtes redondantes au secrétariat et une meilleure cohésion départementale.
-          </motion.p>
-        </div>
-      </Section>
-
-      {/* Slider photos CODI */}
-      <Section customDelay={1.5} className="flex justify-center">
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1 }}
-          className="w-full max-w-5xl relative"
-        >
-          <div className="relative overflow-hidden rounded-lg shadow-2xl" style={{ height: '600px' }}>
-            {codiImages.map((img, index) => (
+            return (
               <motion.div
-                key={index}
-                initial={{ opacity: 0 }}
-                animate={{ 
-                  opacity: currentSlide === index ? 1 : 0,
-                  transition: { duration: 0.5 }
-                }}
-                className="absolute inset-0"
+                key={node.id}
+                initial={{ opacity: 0, x: -24 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.45, delay: i * 0.03 }}
+                className="relative md:pl-16"
               >
-                <Image
-                  src={img}
-                  alt={`Événement CODI ${index + 1}`}
-                  fill
-                  className="object-cover"
-                  priority={index === 0}
+                <div
+                  className="hidden md:flex absolute left-5 top-6 w-4 h-4 rounded-full -translate-x-1/2 items-center justify-center"
+                  style={{ background: node.color, boxShadow: `0 0 10px ${node.color}80` }}
                 />
+
+                <div className="glass rounded-xl p-6" style={{ borderLeft: `3px solid ${node.color}` }}>
+                  <div className="flex flex-wrap items-center gap-3 mb-3">
+                    <span
+                      className="font-mono text-xs font-bold px-2 py-0.5 rounded"
+                      style={{ background: `${node.color}18`, color: node.color }}
+                    >
+                      [{node.tag}]
+                    </span>
+                    <span className="font-mono text-xs" style={{ color: 'var(--text-3)' }}>
+                      {node.period}
+                    </span>
+                  </div>
+
+                  <h3 className="text-lg font-semibold mb-0.5" style={{ color: 'var(--text-1)' }}>
+                    {node.title}
+                  </h3>
+                  <p className="text-sm font-medium mb-3" style={{ color: 'var(--accent)' }}>
+                    {node.place}
+                  </p>
+
+                  <p className="text-sm" style={{ color: 'var(--text-2)' }}>
+                    {node.text}
+                  </p>
+                </div>
               </motion.div>
-            ))}
-          </div>
-
-          <button 
-            onClick={prevSlide}
-            className="absolute left-4 top-1/2 -translate-y-1/2 bg-black/30 text-white p-2 rounded-full hover:bg-black/50 transition"
-            aria-label="Image précédente"
-          >
-            <FaChevronLeft size={24} />
-          </button>
-          <button 
-            onClick={nextSlide}
-            className="absolute right-4 top-1/2 -translate-y-1/2 bg-black/30 text-white p-2 rounded-full hover:bg-black/50 transition"
-            aria-label="Image suivante"
-          >
-            <FaChevronRight size={24} />
-          </button>
-
-          <div className="flex justify-center mt-4 space-x-2">
-            {codiImages.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => setCurrentSlide(index)}
-                className={`w-3 h-3 rounded-full transition ${currentSlide === index ? 'bg-blue-600' : 'bg-gray-300'}`}
-                aria-label={`Aller à l'image ${index + 1}`}
-              />
-            ))}
-          </div>
-        </motion.div>
-      </Section>
-
-      {/* Compétences acquises */}
-      <Section customDelay={1.6}>
-        <div className="max-w-4xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="glass p-8 rounded-xl shadow-lg"
-            style={{ borderLeft: '3px solid var(--accent)' }}
-          >
-            <h3 className="text-2xl font-bold mb-4" style={{ color: 'var(--accent)' }}>Leadership forgé dans l'action</h3>
-            <p className="text-lg leading-relaxed text-gray-700 mb-4">
-              Ce mandat a été mon accélérateur de croissance. Face aux <strong>directeurs d'école</strong>, j'ai appris à défendre des budgets avec des arguments percutants. Devant 300 étudiants, j'ai surmonté le trac pour <strong>porter une vision</strong>. Chaque crise gérée (annulation de sponsor, conflits entre promotions) a aiguisé mon <strong>calme stratégique</strong>.
-            </p>
-            <p className="text-lg leading-relaxed" style={{ color: 'var(--text-2)' }}>
-              Le plus précieux ? L'art de <strong>prendre des décisions impopulaires mais justes</strong>. Quand nous avons dû reporter un événement pour cause de grève, les critiques fusèrent. Mais en expliquant notre processus décisionnel transparent, nous avons gagné en crédibilité. Aujourd'hui, ces compétences irriguent chaque aspect de ma vie professionnelle : anticiper les objections, convaincre par les faits, et transformer chaque échec en levier.
-            </p>
-          </motion.div>
+            )
+          })}
         </div>
-      </Section>
+      </div>
 
-      {/* Vision du monde */}
-      <Section customDelay={1.8}>
-        <div className="max-w-4xl mx-auto space-y-6 text-gray-700">
-          <h2 className="text-3xl font-bold mb-4">Ma vision du monde</h2>
-          {[
-            `Face aux <strong>conflits et tensions géopolitiques</strong>, je suis convaincu que l'informatique peut fédérer les intérêts communs via des plateformes collaboratives sécurisées.`,
-            `Je rêve d'un futur où chacun peut <strong>exprimer librement</strong> ses idées et <strong>circuler sans frontières</strong>, indépendamment de son origine, sa culture ou sa couleur de peau.`,
-            `Mon espoir est de bâtir un monde où l'<strong>innovation profite à tous</strong>, offrant à chacun la chance de réaliser ses ambitions, sans barrières ni discriminations.`
-          ].map((text, i) => (
-            <motion.p
-              key={i}
-              initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: i * 0.2 }}
-              className="text-lg leading-relaxed"
-              dangerouslySetInnerHTML={{ __html: text }}
-            />
-          ))}
-        </div>
-      </Section>
-
-      {/* Image vision */}
-      <Section customDelay={2.0} className="flex justify-center">
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1 }}
-          className="w-full max-w-5xl"
-        >
-          <Image
-            src="/vision.jpg"
-            alt="Ma vision pour l'avenir"
-            width={1200}
-            height={600}
-            className="rounded-lg shadow-2xl object-cover"
-          />
-        </motion.div>
-      </Section>
-
-      {/* Bouton retour en haut */}
       {showTopBtn && (
         <motion.button
           onClick={scrollToTop}
@@ -325,8 +294,9 @@ export default function AProposPage() {
         </motion.button>
       )}
 
-      {/* Footer */}
-      <Footer />
+      <div className="mt-20">
+        <Footer />
+      </div>
     </main>
   )
 }
