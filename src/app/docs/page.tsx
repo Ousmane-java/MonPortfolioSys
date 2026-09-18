@@ -74,13 +74,13 @@ const docs: DocItem[] = [
     updatedAt: '2026-01-31',
     tags: ['documentation', 'runbooks', 'amélioration continue'],
     summary:
-      'Espace de documentation opérationnelle : procédures, résolutions d’incidents, bonnes pratiques, et retours d’expérience.',
+      'Espace de documentation opérationnelle : procédures, résolutions d’incidents, bonnes pratiques, et retours d’expérience — côté infrastructure comme côté support applicatif.',
     blocks: [
       { type: 'heading', text: 'Objectif' },
       {
         type: 'paragraph',
         text:
-          "Cette page centralise mes documentations (runbooks) : chaque fois que je résous un problème (DNS, mail, Linux, réseau, CI/CD…), je le formalise ici avec un format clair : contexte → symptômes → cause racine → solution → vérifications.",
+          "Cette page centralise mes documentations (runbooks) : chaque fois que je résous un problème (DNS, mail, Linux, réseau, CI/CD, support applicatif…), je le formalise ici avec un format clair : contexte → symptômes → cause racine → solution → vérifications.",
       },
       {
         type: 'callout',
@@ -1518,6 +1518,566 @@ ansible-playbook playbooks/rollback.yml -l web`,
           'Rôles non idempotents → dérive et surprises.',
           'Pas de backup avant config critique → lockout SSH.',
           'Secrets en clair → utiliser ansible-vault.',
+        ],
+      },
+    ],
+  },
+
+  {
+    id: 'outlook-reconnect-after-ad-reset',
+    title: 'Outlook bloqué en boucle de connexion après reset du mot de passe Active Directory',
+    category: 'Résolutions',
+    updatedAt: '2026-09-18',
+    tags: ['outlook', 'active-directory', 'kerberos', 'credential-manager', 'support-n1'],
+    summary:
+      'Après un reset de mot de passe AD, Outlook redemande les identifiants en boucle alors que la session Windows est à jour. Le cache Credential Manager et le ticket Kerberos gardent l’ancien mot de passe : il faut les purger dans le bon ordre.',
+    blocks: [
+      { type: 'heading', text: 'Contexte & symptômes' },
+      {
+        type: 'list',
+        items: [
+          'Réinitialisation d’un mot de passe AD (self-service ou par le support) pour un utilisateur.',
+          'L’utilisateur ouvre sa session Windows normalement avec le nouveau mot de passe.',
+          'Outlook affiche une popup d’authentification en boucle et refuse les nouveaux identifiants.',
+          'Parfois Teams et OneDrive sont aussi bloqués en même temps (même mécanisme de cache).',
+        ],
+      },
+
+      { type: 'heading', text: 'Étape 0 — Triage' },
+      {
+        type: 'callout',
+        tone: 'info',
+        title: 'Objectif',
+        text:
+          'Vérifier que le compte n’est pas verrouillé côté AD avant de toucher au poste — sinon on risque de masquer la vraie cause et de multiplier les tentatives infructueuses.',
+      },
+
+      { type: 'heading', text: 'Étape 1 — Vérifier l’état du compte côté Active Directory' },
+      {
+        type: 'code',
+        label: 'PowerShell (poste admin / serveur AD)',
+        language: 'powershell',
+        code: `Get-ADUser -Identity <sAMAccountName> -Properties LockedOut, PasswordLastSet, BadLogonCount
+
+# Si verrouillé
+Unlock-ADAccount -Identity <sAMAccountName>`,
+      },
+
+      { type: 'divider' },
+
+      { type: 'heading', text: 'Étape 2 — Purger le ticket Kerberos en cache sur le poste' },
+      {
+        type: 'paragraph',
+        text:
+          'Windows garde un ticket Kerberos basé sur l’ancien mot de passe tant qu’il n’a pas expiré ou été purgé explicitement. C’est la cause la plus fréquente de la boucle de connexion.',
+      },
+      {
+        type: 'code',
+        label: 'Sur le poste utilisateur (cmd)',
+        language: 'cmd',
+        code: `klist
+klist purge`,
+      },
+
+      { type: 'heading', text: 'Étape 3 — Purger le Gestionnaire d’informations d’identification' },
+      {
+        type: 'paragraph',
+        text:
+          'Outlook et Windows stockent aussi des identifiants séparément dans le Gestionnaire d’informations d’identification (Credential Manager). L’ancien mot de passe y reste tant qu’il n’est pas supprimé manuellement.',
+      },
+      {
+        type: 'code',
+        label: 'Lister puis supprimer les entrées liées',
+        language: 'cmd',
+        code: `cmdkey /list
+
+# Supprimer chaque entrée liée à Office/Outlook/AD (ex: MicrosoftOffice16_Data:...)
+cmdkey /delete:<nom_de_l_entree>`,
+      },
+
+      { type: 'divider' },
+
+      { type: 'heading', text: 'Étape 4 — Redémarrer le poste (pas juste Outlook)' },
+      {
+        type: 'callout',
+        tone: 'warn',
+        title: 'Important',
+        text:
+          'Fermer/rouvrir Outlook ne suffit pas : le cache d’authentification Windows (LSA) n’est rafraîchi qu’au verrouillage/déverrouillage de session ou au redémarrage. Sans ça, la purge des étapes 2 et 3 ne se voit pas côté utilisateur.',
+      },
+
+      { type: 'heading', text: 'Étape 5 — Si ça persiste : profil Outlook corrompu' },
+      {
+        type: 'list',
+        items: [
+          'Panneau de configuration → Mail → Afficher les profils → recréer un profil Outlook.',
+          'Le fichier .ost local n’est pas touché : les mails déjà synchronisés ne sont pas perdus.',
+          'À faire seulement si les étapes 1 à 4 n’ont pas résolu — c’est une étape plus lourde pour l’utilisateur.',
+        ],
+      },
+
+      { type: 'heading', text: 'Vérifications (preuve de résolution)' },
+      {
+        type: 'list',
+        items: [
+          'Outlook s’ouvre sans popup d’authentification.',
+          'Envoi/réception fonctionnel, calendrier synchronisé.',
+          'Teams et OneDrive reconnectés sans ressaisie (même cache résolu).',
+        ],
+      },
+
+      { type: 'heading', text: 'Erreurs fréquentes' },
+      {
+        type: 'list',
+        items: [
+          'Redemander un nouveau reset de mot de passe avant d’avoir purgé le cache → le problème se reproduit avec le nouveau mot de passe aussi.',
+          'Oublier de vérifier le verrouillage AD (BadLogonCount) avant d’intervenir sur le poste.',
+          'Recréer le profil Outlook en premier réflexe, alors que la majorité des cas se règlent avec `klist purge` + Credential Manager.',
+        ],
+      },
+    ],
+  },
+
+  {
+    id: 'iis-apppool-503-service-account',
+    title: 'Application web interne inaccessible (erreur 503) — pool d’applications IIS arrêté',
+    category: 'Résolutions',
+    updatedAt: '2026-09-18',
+    tags: ['windows-server', 'iis', 'application-metier', 'config-serveur', 'incident'],
+    summary:
+      'Une application web interne hébergée sur IIS devient inaccessible (503) pour tous les utilisateurs après une intervention sur le serveur. Le pool d’applications s’est arrêté automatiquement après des échecs de démarrage liés à un compte de service.',
+    blocks: [
+      { type: 'heading', text: 'Contexte & symptômes' },
+      {
+        type: 'list',
+        items: [
+          'Après une maintenance planifiée (redémarrage serveur, changement de mot de passe d’un compte de service AD), l’application web interne renvoie une erreur 503 "Service Unavailable".',
+          'Tous les utilisateurs sont impactés en même temps — pas un problème réseau individuel.',
+          'Le serveur IIS répond normalement (pas de timeout réseau), seule l’application concernée est down.',
+        ],
+      },
+
+      { type: 'heading', text: 'Étape 0 — Triage' },
+      {
+        type: 'callout',
+        tone: 'info',
+        title: 'Objectif',
+        text:
+          'Isoler si le problème vient du site, du pool d’applications ou du serveur entier — pour éviter un redémarrage global inutile qui impacterait d’autres applications hébergées sur le même IIS.',
+      },
+
+      { type: 'heading', text: 'Étape 1 — Vérifier l’état du pool dans le Gestionnaire IIS' },
+      {
+        type: 'code',
+        label: 'PowerShell (module WebAdministration)',
+        language: 'powershell',
+        code: `Import-Module WebAdministration
+Get-WebAppPoolState -Name "<NomDuPool>"
+
+# Si "Stopped"
+Start-WebAppPool -Name "<NomDuPool>"`,
+      },
+      {
+        type: 'paragraph',
+        text:
+          'Si le pool redémarre puis repasse en "Stopped" quelques secondes après, ce n’est pas un simple redémarrage qu’il faut faire — il y a une cause qui le fait échouer en boucle.',
+      },
+
+      { type: 'divider' },
+
+      { type: 'heading', text: 'Étape 2 — Lire les journaux Windows (Event Viewer)' },
+      {
+        type: 'code',
+        label: 'Journal Système',
+        language: 'powershell',
+        code: `Get-WinEvent -LogName System -MaxEvents 50 |
+  Where-Object { $_.ProviderName -eq "WAS" -or $_.Message -match "<NomDuPool>" }`,
+      },
+      {
+        type: 'list',
+        items: [
+          'Event ID 5057/5059 (WAS) : échec de démarrage du worker process, souvent lié à l’identité du pool.',
+          'Message "Logon failure: unknown user name or bad password" → compte de service en cause.',
+        ],
+      },
+
+      { type: 'heading', text: 'Étape 3 — Cause racine : compte de service expiré' },
+      {
+        type: 'callout',
+        tone: 'warn',
+        title: 'Pattern classique',
+        text:
+          'Le pool tourne sous un compte de service Active Directory (identité personnalisée). Si son mot de passe a expiré ou a été changé sans mise à jour côté IIS, chaque tentative de démarrage échoue. Après plusieurs échecs, IIS déclenche la "Rapid-Fail Protection" et arrête le pool automatiquement.',
+      },
+
+      { type: 'heading', text: 'Étape 4 — Corriger l’identité du pool' },
+      {
+        type: 'code',
+        label: 'Mise à jour des identifiants',
+        language: 'powershell',
+        code: `$cred = Get-Credential
+Set-ItemProperty "IIS:\\AppPools\\<NomDuPool>" -Name processModel -Value @{
+  identityType = 3
+  userName = $cred.UserName
+  password = $cred.GetNetworkCredential().Password
+}
+
+Start-WebAppPool -Name "<NomDuPool>"`,
+      },
+      {
+        type: 'paragraph',
+        text:
+          'Redémarrer uniquement le pool concerné, jamais IIS entier — les autres applications hébergées sur le même serveur ne doivent pas être impactées par cet incident.',
+      },
+
+      { type: 'divider' },
+
+      { type: 'heading', text: 'Vérifications (preuve de résolution)' },
+      {
+        type: 'list',
+        items: [
+          'Get-WebAppPoolState renvoie "Started" et reste stable (pas de retour en Stopped).',
+          'Test fonctionnel de l’application dans un navigateur : plus d’erreur 503.',
+          'Plus de nouvel événement WAS 5057/5059 après le correctif.',
+        ],
+      },
+
+      { type: 'heading', text: 'Prévention' },
+      {
+        type: 'list',
+        items: [
+          'Exempter les comptes de service applicatifs critiques de la politique d’expiration de mot de passe AD (ou migrer vers un gMSA).',
+          'Ajouter une supervision sur l’état des pools IIS critiques, pas seulement sur la disponibilité HTTP du site.',
+          'Documenter, pour chaque application, le compte de service utilisé — évite une perte de temps en pleine crise à chercher "qui" fait tourner le pool.',
+        ],
+      },
+    ],
+  },
+
+  {
+    id: 'sql-server-connection-pool-exhausted',
+    title: 'Application métier hors service — connexions SQL Server épuisées (fuite applicative)',
+    category: 'Résolutions',
+    updatedAt: '2026-09-18',
+    tags: ['sql-server', 'application-metier', 'base-de-donnees', 'incident', 'support-n2'],
+    summary:
+      'Une application métier devient inaccessible pour tous les utilisateurs : le serveur SQL Server refuse toute nouvelle connexion. Diagnostic des sessions actives, purge des connexions orphelines pour rétablir le service en urgence, puis remontée de la cause applicative.',
+    blocks: [
+      { type: 'heading', text: 'Contexte & symptômes' },
+      {
+        type: 'list',
+        items: [
+          'Message "Impossible de se connecter au serveur" ou timeout dans l’application métier.',
+          'La panne s’aggrave progressivement au fil de la journée plutôt que de survenir d’un coup.',
+          'Redémarrer l’application côté client ne change rien : le problème est côté base de données.',
+        ],
+      },
+
+      { type: 'heading', text: 'Étape 0 — Triage' },
+      {
+        type: 'callout',
+        tone: 'info',
+        title: 'Objectif',
+        text:
+          'Rétablir le service au plus vite sans casser une transaction légitime en cours ailleurs sur le même serveur. Identifier avant d’agir.',
+      },
+
+      { type: 'heading', text: 'Étape 1 — Constater la saturation des connexions' },
+      {
+        type: 'code',
+        label: 'T-SQL (SSMS)',
+        language: 'sql',
+        code: `SELECT COUNT(*) AS total_connexions
+FROM sys.dm_exec_sessions
+WHERE is_user_process = 1;
+
+SELECT host_name, program_name, login_name, COUNT(*) AS nb
+FROM sys.dm_exec_sessions
+WHERE is_user_process = 1
+GROUP BY host_name, program_name, login_name
+ORDER BY nb DESC;`,
+      },
+
+      { type: 'divider' },
+
+      { type: 'heading', text: 'Étape 2 — Identifier le responsable' },
+      {
+        type: 'callout',
+        tone: 'warn',
+        title: 'Pattern classique',
+        text:
+          'Un serveur d’application (ou un poste) accumule des centaines de connexions sous le même program_name/login : signe d’une application qui ouvre des connexions sans les fermer (pas de dispose, pool mal dimensionné côté code).',
+      },
+
+      { type: 'heading', text: 'Étape 3 — Libérer les connexions orphelines (action d’urgence)' },
+      {
+        type: 'code',
+        label: 'Identifier puis fermer les sessions inactives du process fautif',
+        language: 'sql',
+        code: `SELECT session_id, status, last_request_end_time
+FROM sys.dm_exec_sessions
+WHERE program_name = '<ProgrammeFautif>' AND status = 'sleeping';
+
+-- Pour chaque session_id identifié comme orpheline :
+KILL <session_id>;`,
+      },
+      {
+        type: 'callout',
+        tone: 'warn',
+        title: 'Attention',
+        text:
+          'Ne jamais faire un KILL en masse à l’aveugle. Vérifier status = "sleeping" et last_request_end_time ancien avant de couper une session — une session active avec une transaction en cours ne doit pas être tuée.',
+      },
+
+      { type: 'divider' },
+
+      { type: 'heading', text: 'Étape 4 — Vérifier le retour de service' },
+      {
+        type: 'list',
+        items: [
+          'Les nouveaux utilisateurs peuvent se reconnecter à l’application immédiatement.',
+          'Le compteur de connexions redescend à un niveau normal.',
+        ],
+      },
+
+      { type: 'heading', text: 'Remontée & correctif de fond' },
+      {
+        type: 'paragraph',
+        text:
+          'Le KILL manuel n’est qu’un pansement : sans correction côté code (fermeture systématique des connexions, dimensionnement du pool), la fuite revient. Remonter à l’équipe applicative avec les requêtes de diagnostic en preuve.',
+      },
+
+      { type: 'heading', text: 'Vérifications (preuve de résolution)' },
+      {
+        type: 'list',
+        items: [
+          'Nombre de connexions stable sur plusieurs heures après l’intervention.',
+          'Plus d’erreur de connexion côté utilisateurs.',
+        ],
+      },
+
+      { type: 'heading', text: 'Prévention' },
+      {
+        type: 'list',
+        items: [
+          'Alerte de supervision sur le nombre de connexions SQL Server actives (seuil avant saturation).',
+          'Revue avec l’équipe dev de la configuration du pool de connexions (max pool size, timeout).',
+          'Documenter la limite de connexions du serveur et les applications qui la consomment le plus.',
+        ],
+      },
+    ],
+  },
+
+  {
+    id: 'gpo-mapped-drives-missing-after-ou-change',
+    title: 'Lecteurs réseau absents au login pour un groupe d’utilisateurs après réorganisation des OU',
+    category: 'Résolutions',
+    updatedAt: '2026-09-18',
+    tags: ['gpo', 'active-directory', 'lecteurs-reseau', 'onboarding', 'support-n2'],
+    summary:
+      'Après une réorganisation des unités organisationnelles Active Directory, un groupe d’utilisateurs perd ses lecteurs réseau mappés au login. Cause : le filtrage de sécurité ou la portée de la GPO ne suit pas le déplacement d’OU.',
+    blocks: [
+      { type: 'heading', text: 'Contexte & symptômes' },
+      {
+        type: 'list',
+        items: [
+          'Réorganisation récente des unités organisationnelles (OU) dans Active Directory.',
+          'Un groupe précis d’utilisateurs n’a plus ses lecteurs réseau habituels au login.',
+          'Les autres utilisateurs, non déplacés, ne sont pas impactés.',
+        ],
+      },
+
+      { type: 'heading', text: 'Étape 0 — Triage' },
+      {
+        type: 'callout',
+        tone: 'info',
+        title: 'Objectif',
+        text:
+          'Isoler si c’est un problème de GPO (le plus probable après une réorg d’OU) ou un problème de droits sur le partage réseau lui-même.',
+      },
+
+      { type: 'heading', text: 'Étape 1 — Vérifier l’application effective des GPO sur un poste concerné' },
+      {
+        type: 'code',
+        label: 'Sur le poste utilisateur',
+        language: 'cmd',
+        code: `gpresult /r
+gpresult /h rapport.html /f`,
+      },
+      {
+        type: 'paragraph',
+        text:
+          'Si la GPO qui mappe les lecteurs n’apparaît plus dans les "GPO appliquées", le problème est confirmé côté GPO et non côté partage.',
+      },
+
+      { type: 'divider' },
+
+      { type: 'heading', text: 'Étape 2 — Retrouver la GPO responsable dans la GPMC' },
+      {
+        type: 'paragraph',
+        text:
+          'Ouvrir la Console de gestion des stratégies de groupe (GPMC), localiser la GPO contenant la préférence "Lecteurs mappés" concernée.',
+      },
+
+      { type: 'heading', text: 'Étape 3 — Vérifier la portée et le filtrage de sécurité' },
+      {
+        type: 'callout',
+        tone: 'warn',
+        title: 'Pattern classique',
+        text:
+          'Deux causes fréquentes après une réorg d’OU : (1) la GPO est liée uniquement à l’ancienne OU, pas à la nouvelle ; (2) le "Security Filtering" de la GPO cible un groupe de sécurité dont les utilisateurs déplacés ne font plus partie.',
+      },
+      {
+        type: 'code',
+        label: 'Vérifier l’appartenance au groupe de sécurité ciblé',
+        language: 'powershell',
+        code: `Get-ADGroupMember -Identity "<GroupeCibleGPO>" | Select-Object Name, SamAccountName`,
+      },
+
+      { type: 'heading', text: 'Étape 4 — Corriger la portée' },
+      {
+        type: 'list',
+        items: [
+          'Cause A (liaison d’OU) : lier la GPO à la nouvelle OU, ou à une OU parente commune si plusieurs OU sont concernées.',
+          'Cause B (filtrage de sécurité) : ajouter les utilisateurs/le groupe déplacé au groupe de sécurité ciblé par le Security Filtering.',
+        ],
+      },
+      {
+        type: 'code',
+        label: 'Exemple : rattacher le groupe au filtrage',
+        language: 'powershell',
+        code: `Add-ADGroupMember -Identity "<GroupeCibleGPO>" -Members "<GroupeUtilisateursDeplace>"`,
+      },
+
+      { type: 'divider' },
+
+      { type: 'heading', text: 'Étape 5 — Forcer l’application et vérifier' },
+      {
+        type: 'code',
+        label: 'Sur le poste utilisateur',
+        language: 'cmd',
+        code: `gpupdate /force
+gpresult /r`,
+      },
+
+      { type: 'heading', text: 'Vérifications (preuve de résolution)' },
+      {
+        type: 'list',
+        items: [
+          'gpresult /r liste à nouveau la GPO parmi les stratégies appliquées.',
+          'Le lecteur réseau apparaît au login suivant (ou après gpupdate /force + relogin).',
+        ],
+      },
+
+      { type: 'heading', text: 'Prévention' },
+      {
+        type: 'list',
+        items: [
+          'Ajouter une étape "revalider la portée et le filtrage des GPO liées" dans la checklist de réorganisation d’OU.',
+          'Documenter, pour chaque GPO critique, l’OU et le groupe de sécurité dont elle dépend.',
+        ],
+      },
+    ],
+  },
+
+  {
+    id: 'vpn-client-fails-after-windows-update',
+    title: 'Client VPN d’entreprise en échec de connexion après une mise à jour Windows',
+    category: 'Résolutions',
+    updatedAt: '2026-09-18',
+    tags: ['vpn', 'windows-update', 'support-n1', 'adaptateur-reseau', 'incident'],
+    summary:
+      'Après une mise à jour Windows, le client VPN d’entreprise échoue à établir le tunnel avec une erreur liée à l’adaptateur réseau virtuel. Le pilote TAP/TUN a été désactivé ou corrompu par la mise à jour.',
+    blocks: [
+      { type: 'heading', text: 'Contexte & symptômes' },
+      {
+        type: 'list',
+        items: [
+          'Le client VPN affiche une erreur générique de connexion ("échec de l’établissement du tunnel") au lancement.',
+          'Le poste avait une connexion VPN fonctionnelle avant une mise à jour Windows récente.',
+          'D’autres utilisateurs n’ayant pas encore reçu la mise à jour ne sont pas impactés.',
+        ],
+      },
+
+      { type: 'heading', text: 'Étape 0 — Triage' },
+      {
+        type: 'callout',
+        tone: 'info',
+        title: 'Objectif',
+        text:
+          'Confirmer la corrélation temporelle avec la mise à jour Windows avant de suspecter un problème côté serveur VPN, qui impacterait alors tous les utilisateurs et pas seulement ceux à jour.',
+      },
+
+      { type: 'heading', text: 'Étape 1 — Vérifier l’historique des mises à jour' },
+      {
+        type: 'code',
+        label: 'PowerShell',
+        language: 'powershell',
+        code: `Get-HotFix | Sort-Object InstalledOn -Descending | Select-Object -First 10`,
+      },
+
+      { type: 'divider' },
+
+      { type: 'heading', text: 'Étape 2 — Vérifier l’état de l’adaptateur réseau virtuel' },
+      {
+        type: 'code',
+        label: 'PowerShell',
+        language: 'powershell',
+        code: `Get-NetAdapter | Where-Object { $_.InterfaceDescription -match "TAP|TUN|VPN" }`,
+      },
+      {
+        type: 'paragraph',
+        text:
+          'Dans le Gestionnaire de périphériques, l’adaptateur TAP/TUN du client VPN apparaît souvent désactivé, manquant, ou marqué d’un point d’exclamation après une mise à jour Windows.',
+      },
+
+      { type: 'heading', text: 'Étape 3 — Confirmer la cause' },
+      {
+        type: 'callout',
+        tone: 'warn',
+        title: 'Pattern classique',
+        text:
+          'Une mise à jour Windows désinstalle ou désactive un pilote tiers jugé incompatible — c’est fréquent avec les adaptateurs réseau virtuels des clients VPN (Cisco AnyConnect, FortiClient, OpenVPN…).',
+      },
+
+      { type: 'heading', text: 'Étape 4 — Réparer le pilote de l’adaptateur' },
+      {
+        type: 'list',
+        items: [
+          'Utiliser en priorité l’option "Repair"/"Réparer" fournie par le client VPN si elle existe (la plupart des éditeurs en proposent une).',
+          'À défaut : désinstaller l’adaptateur dans le Gestionnaire de périphériques, puis relancer une analyse des modifications matérielles.',
+          'Un redémarrage du poste est nécessaire après la réparation ou la réinstallation.',
+        ],
+      },
+
+      { type: 'heading', text: 'Étape 5 — Tester la connexion' },
+      {
+        type: 'list',
+        items: [
+          'Relancer le client VPN et établir le tunnel.',
+          'Tester l’accès à une ressource interne (partage réseau, application métier) pour confirmer le fonctionnement de bout en bout.',
+        ],
+      },
+
+      { type: 'divider' },
+
+      { type: 'heading', text: 'Vérifications (preuve de résolution)' },
+      {
+        type: 'list',
+        items: [
+          'L’adaptateur réseau virtuel apparaît actif dans Get-NetAdapter.',
+          'Le tunnel VPN s’établit sans erreur.',
+          'Accès confirmé aux ressources internes à travers le VPN.',
+        ],
+      },
+
+      { type: 'heading', text: 'Prévention' },
+      {
+        type: 'list',
+        items: [
+          'Déployer les mises à jour Windows par anneaux (pilote/test avant diffusion générale) plutôt qu’à tous les postes en même temps.',
+          'Maintenir une liste de compatibilité connue entre versions Windows et version du client VPN.',
+          'Communiquer en amont sur les incidents connus après une mise à jour majeure, pour accélérer le diagnostic si le cas se reproduit.',
         ],
       },
     ],
