@@ -79,11 +79,29 @@ export default function ExtraSections() {
           Me Contacter
         </h2>
 
-        <p className="text-lg mb-6" style={{ color: 'var(--text-2)' }}>
-          Admis en Master Systèmes, Réseaux &amp; Cloud Computing, je recherche une alternance pour la rentrée 2026
-          (Ingénieur / Administrateur / Technicien Systèmes & Réseaux, orientation Linux).
-          N&apos;hésitez pas à me contacter pour toute opportunité.
+        <p className="text-lg mb-5" style={{ color: 'var(--text-2)' }}>
+          Après un an d&apos;alternance en support systèmes &amp; réseaux chez Open, me voici en Master Systèmes,
+          Réseaux &amp; Cloud Computing à l&apos;ESGI. Je cherche l&apos;entreprise qui m&apos;accueillera pour les deux
+          prochaines années : Technicien Informatique, support systèmes &amp; réseaux. Windows, Linux, partout en France.
         </p>
+
+        <div className="flex flex-wrap justify-center gap-2 mb-7">
+          {[
+            'disponibilité : immédiate',
+            'rythme : 3 sem. entreprise / 1 sem. école',
+            'durée : 2 ans',
+            'partout en France',
+            'permis B',
+          ].map((tag) => (
+            <span
+              key={tag}
+              className="font-mono text-xs px-3 py-1 rounded-full"
+              style={{ background: 'var(--tag-bg)', color: 'var(--tag-text)' }}
+            >
+              {tag}
+            </span>
+          ))}
+        </div>
 
         <motion.a
           href="mailto:contact@ousmanedrame.com"

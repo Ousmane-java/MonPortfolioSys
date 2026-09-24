@@ -85,10 +85,10 @@ const nodes: GraphNode[] = [
     id: 'open',
     kind: 'trunk',
     tag: 'exploitation',
-    period: '2025 — 2026 · en cours',
+    period: '2025 — 2026',
     title: 'Alternance Technicien Support Systèmes & Réseaux',
     place: 'Open — Paris',
-    text: "Support N1/N2, Active Directory, supervision Centreon, automatisation Ansible. Le poste qui structure aujourd'hui mon quotidien technique.",
+    text: "Support N1/N2, Active Directory, supervision Centreon, automatisation Ansible. Un an en production qui a structuré mon quotidien technique.",
     color: '#818cf8',
   },
   {
