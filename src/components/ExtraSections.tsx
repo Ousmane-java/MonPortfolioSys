@@ -104,7 +104,7 @@ export default function ExtraSections() {
         <div className="flex flex-wrap justify-center gap-2 mb-7">
           {[
             'disponibilité : immédiate',
-            'rythme : 3 sem. entreprise / 1 sem. école',
+            'rythme : 4 jours entreprise / 1 jour école',
             'durée : 2 ans',
             'partout en France',
             'permis B',
