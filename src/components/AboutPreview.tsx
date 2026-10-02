@@ -42,7 +42,7 @@ export default function AboutPreview() {
               style={{ background: 'var(--bg)' }}
             >
               <Image
-                src="/profil.jpg"
+                src="/profil.JPG"
                 alt="Ousmane Drame"
                 width={400}
                 height={400}
