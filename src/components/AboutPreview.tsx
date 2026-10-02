@@ -47,7 +47,7 @@ export default function AboutPreview() {
                 width={400}
                 height={400}
                 priority
-                className="rounded-full"
+                className="rounded-full w-44 h-44 sm:w-60 sm:h-60 md:w-[400px] md:h-[400px] object-cover"
               />
             </div>
           </div>

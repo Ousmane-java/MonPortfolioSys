@@ -2356,7 +2356,7 @@ export default function DocsPage() {
                 initial={{ x: -340, opacity: 0 }}
                 animate={{ x: 0, opacity: 1 }}
                 transition={{ duration: 0.2 }}
-                className="absolute left-0 top-0 bottom-0 w-[340px] glass"
+                className="absolute left-0 top-0 bottom-0 w-[85vw] max-w-[340px] glass"
                 style={{ borderRight: '1px solid var(--card-border)' }}
               >
                 <div className="p-4 flex items-center justify-between border-b border-gray-200 dark:border-zinc-800">

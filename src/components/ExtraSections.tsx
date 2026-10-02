@@ -87,13 +87,13 @@ export default function ExtraSections() {
 
         <div className="flex flex-wrap justify-center gap-2 mb-3">
           {[
-            'Administrateur/Technicien Systèmes, Réseaux & Support Informatique',
+            'Administrateur/Technicien Systèmes, Réseaux & Support IT',
             'Administrateur Infrastructure IT',
             'Cloud & DevOps',
           ].map((tag) => (
             <span
               key={tag}
-              className="font-mono text-xs px-3 py-1 rounded-full"
+              className="font-mono text-xs px-3 py-1 rounded-full whitespace-nowrap"
               style={{ background: 'var(--accent-muted)', color: 'var(--accent)' }}
             >
               {tag}
