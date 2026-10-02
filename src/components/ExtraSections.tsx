@@ -82,8 +82,24 @@ export default function ExtraSections() {
         <p className="text-lg mb-5" style={{ color: 'var(--text-2)' }}>
           Après un an d&apos;alternance en support systèmes &amp; réseaux chez Open, me voici en Master CyberSecurity,
           Cloud, Systems &amp; Networks à l&apos;ESTIAM. Je cherche l&apos;entreprise qui m&apos;accueillera pour les deux
-          prochaines années : Technicien Informatique, support systèmes &amp; réseaux. Windows, Linux, partout en France.
+          prochaines années. Environnements Windows et Linux.
         </p>
+
+        <div className="flex flex-wrap justify-center gap-2 mb-3">
+          {[
+            'Administrateur/Technicien Systèmes, Réseaux & Support Informatique',
+            'Administrateur Infrastructure IT',
+            'Cloud & DevOps',
+          ].map((tag) => (
+            <span
+              key={tag}
+              className="font-mono text-xs px-3 py-1 rounded-full"
+              style={{ background: 'var(--accent-muted)', color: 'var(--accent)' }}
+            >
+              {tag}
+            </span>
+          ))}
+        </div>
 
         <div className="flex flex-wrap justify-center gap-2 mb-7">
           {[
