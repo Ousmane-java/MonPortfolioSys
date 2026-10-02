@@ -80,8 +80,8 @@ export default function ExtraSections() {
         </h2>
 
         <p className="text-lg mb-5" style={{ color: 'var(--text-2)' }}>
-          Après un an d&apos;alternance en support systèmes &amp; réseaux chez Open, me voici en Master Systèmes,
-          Réseaux &amp; Cloud Computing à l&apos;ESGI. Je cherche l&apos;entreprise qui m&apos;accueillera pour les deux
+          Après un an d&apos;alternance en support systèmes &amp; réseaux chez Open, me voici en Master CyberSecurity,
+          Cloud, Systems &amp; Networks à l&apos;ESTIAM. Je cherche l&apos;entreprise qui m&apos;accueillera pour les deux
           prochaines années : Technicien Informatique, support systèmes &amp; réseaux. Windows, Linux, partout en France.
         </p>
 

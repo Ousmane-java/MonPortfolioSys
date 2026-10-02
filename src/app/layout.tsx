@@ -5,7 +5,7 @@ import NetworkBackground from '../components/NetworkBackground'
 
 export const metadata: Metadata = {
   title: 'Ousmane Drame — Ingénieur Systèmes & Réseaux',
-  description: 'Portfolio de Ousmane Drame — Systèmes, Réseaux, Cloud Computing',
+  description: 'Portfolio de Ousmane Drame — CyberSecurity, Cloud, Systems & Networks',
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

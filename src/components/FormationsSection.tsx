@@ -6,9 +6,9 @@ const formations = [
   {
     color: '#00d4ff',
     period: '2026 — 2028',
-    diploma: 'Master Systèmes, Réseaux & Cloud Computing',
-    school: 'ESGI — Paris',
-    detail: "Poursuite d'études en alternance. Recherche d'un poste Technicien Informatique / Support Systèmes & Réseaux pour la rentrée 2026.",
+    diploma: 'Master CyberSecurity, Cloud, Systems & Networks',
+    school: 'ESTIAM — France',
+    detail: "Poursuite d'études en alternance. Recherche d'une entreprise d'accueil pour un poste Technicien Informatique / Support Systèmes & Réseaux.",
   },
   {
     color: '#00ff88',
